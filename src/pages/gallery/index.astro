@@ -1,0 +1,131 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import DonateBand from '../../components/DonateBand.astro';
+import { gallery } from '../../data/gallery';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Gallery', href: '/gallery/' }
+];
+
+const categories = ['All', ...Array.from(new Set(gallery.map((g) => g.category)))];
+---
+<Base
+  title="Gallery | Muraqabah Initiative"
+  description="Photographs from Muraqabah Initiative programs, khidmah campaigns, and journeys, from classrooms in the Greater Toronto Area to distributions in Tarim, Yemen."
+>
+  <PageHero
+    eyebrow="Gallery"
+    title="Moments from the work"
+    lede="Classrooms and gatherings, food packs and deliveries, and the places that shape our tradition. Every photograph here is from Muraqabah's own programs and campaigns."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="chips" role="group" aria-label="Filter gallery by category" data-reveal>
+        {categories.map((c, i) => (
+          <button class="chip" type="button" data-filter={c} aria-pressed={i === 0 ? 'true' : 'false'}>{c}</button>
+        ))}
+      </div>
+
+      <div class="gallery-grid" data-gallery>
+        {gallery.map((item, i) => (
+          <button
+            type="button"
+            data-index={i}
+            data-category={item.category}
+            aria-label={`Open image: ${item.caption}`}
+          >
+            <img src={item.src} alt={item.alt} loading="lazy" decoding="async" width="800" height="600" />
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <dialog class="lightbox" data-lightbox aria-label="Image viewer">
+    <p class="lb-count" data-lb-count></p>
+    <button class="lb-btn lb-close" type="button" data-lb-close aria-label="Close image viewer">&times;</button>
+    <button class="lb-btn lb-prev" type="button" data-lb-prev aria-label="Previous image">&larr;</button>
+    <button class="lb-btn lb-next" type="button" data-lb-next aria-label="Next image">&rarr;</button>
+    <figure>
+      <img data-lb-img src="" alt="" />
+      <figcaption data-lb-caption></figcaption>
+    </figure>
+  </dialog>
+
+  <DonateBand />
+</Base>
+
+<script>
+  const grid = document.querySelector<HTMLElement>('[data-gallery]');
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const tiles = Array.from(grid?.querySelectorAll<HTMLButtonElement>('button[data-index]') ?? []);
+  const items = tiles.map((t) => {
+    const img = t.querySelector('img')!;
+    return { src: img.src, alt: img.alt, caption: t.getAttribute('aria-label')!.replace('Open image: ', '') };
+  });
+
+  // Category filtering
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => c.setAttribute('aria-pressed', c === chip ? 'true' : 'false'));
+      const cat = chip.dataset.filter;
+      tiles.forEach((t) => {
+        t.style.display = cat === 'All' || t.dataset.category === cat ? '' : 'none';
+      });
+    });
+  });
+
+  // Lightbox
+  const box = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  const lbImg = box?.querySelector<HTMLImageElement>('[data-lb-img]');
+  const lbCap = box?.querySelector<HTMLElement>('[data-lb-caption]');
+  const lbCount = box?.querySelector<HTMLElement>('[data-lb-count]');
+  let current = 0;
+
+  const visibleTiles = () => tiles.filter((t) => t.style.display !== 'none');
+
+  const show = (tile: HTMLButtonElement) => {
+    const list = visibleTiles();
+    current = list.indexOf(tile);
+    const i = Number(tile.dataset.index);
+    if (!lbImg || !lbCap || !lbCount) return;
+    lbImg.src = items[i].src;
+    lbImg.alt = items[i].alt;
+    lbCap.textContent = items[i].caption;
+    lbCount.textContent = `${current + 1} of ${list.length}`;
+  };
+
+  const step = (dir: number) => {
+    const list = visibleTiles();
+    current = (current + dir + list.length) % list.length;
+    show(list[current]);
+  };
+
+  tiles.forEach((tile) => {
+    tile.addEventListener('click', () => {
+      show(tile);
+      box?.showModal();
+    });
+  });
+
+  box?.querySelector('[data-lb-close]')?.addEventListener('click', () => box.close());
+  box?.querySelector('[data-lb-prev]')?.addEventListener('click', () => step(-1));
+  box?.querySelector('[data-lb-next]')?.addEventListener('click', () => step(1));
+  box?.addEventListener('click', (e) => { if (e.target === box) box.close(); });
+  box?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
+
+  // Basic swipe support
+  let touchX = 0;
+  box?.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+  box?.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 48) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+</script>

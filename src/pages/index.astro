@@ -1,0 +1,323 @@
+---
+import Base from '../layouts/Base.astro';
+import StatGrid from '../components/StatGrid.astro';
+import ProgramCard from '../components/ProgramCard.astro';
+import VideoEmbed from '../components/VideoEmbed.astro';
+import DonateBand from '../components/DonateBand.astro';
+import SignupBand from '../components/SignupBand.astro';
+import { site, links, yearOneStats, features } from '../config/site';
+import { whatsapp, youtubeChannel } from '../data/social';
+import { programs } from '../data/programs';
+import { scholars } from '../data/scholars';
+import { featuredVideo } from '../data/videos';
+import { gallery } from '../data/gallery';
+import { testimonials } from '../data/testimonials';
+import { getCollection } from 'astro:content';
+import { organizationSchema, webSiteSchema, videoSchema } from '../lib/schema';
+
+const featured = programs.filter((p) => p.status !== 'completed');
+const spheres = programs.find((p) => p.slug === 'spheres-of-faith');
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+const galleryPreview = gallery.slice(0, 8);
+---
+
+<Base
+  title="Muraqabah Initiative | Traditional Islamic Education in the GTA and Online"
+  description="Traditional Islamic education, spiritual formation, and sincere community service for seekers in the Greater Toronto Area, across Canada, and online. Knowledge that is not only learned, but embodied."
+  schema={[organizationSchema(), webSiteSchema(), videoSchema(featuredVideo)]}
+>
+  <!-- Hero -->
+  <section class="section" style="padding-top: clamp(3rem, 7vw, 5.5rem);">
+    <div class="container split">
+      <div data-reveal>
+        <p class="eyebrow">Muraqabah Initiative</p>
+        <h1>Knowledge that is not only learned, but <em>embodied</em>.</h1>
+        <p class="lede">
+          Traditional Islamic education, spiritual formation, and sincere community service for seekers in
+          Canada and beyond.
+        </p>
+        <div class="btn-row" style="margin-top: 1.6rem;">
+          <a class="btn btn-primary" href="/programs/">Explore Programs</a>
+          <a class="btn btn-outline" href="/donate/">Support the Mission</a>
+        </div>
+        <p style="margin-top: 1.2rem; font-size: 0.92rem;">
+          <a href={whatsapp} rel="noopener" data-event="WhatsApp Join">Join our WhatsApp Community &rarr;</a>
+        </p>
+      </div>
+      <div class="arch arch--framed" data-reveal>
+        <img
+          src="/images/photos/tarim-city.webp"
+          alt="The historic mud-brick skyline of Tarim, Yemen, with the minaret of Al-Muhdhar Mosque"
+          width="820" height="1025"
+          fetchpriority="high"
+          style="aspect-ratio: 4/5;"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Definition -->
+  <section class="section--tight">
+    <div class="container">
+      <div class="definition" data-reveal>
+        <span class="arabic" lang="ar">مُراقَبة</span>
+        <p style="margin:0;"><span class="word">muraqabah</span><span class="pos">&middot; n.</span></p>
+        <p class="gloss">The vigilant awareness that Allah is always watching.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Year one metrics -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Year One</p>
+        <h2>One year. Real impact.</h2>
+      </div>
+      <StatGrid stats={yearOneStats} />
+    </div>
+  </section>
+
+  <!-- Three pillars -->
+  <section class="section section--sand">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Our Pillars</p>
+        <h2>Three pillars. One purpose.</h2>
+        <p class="lede">Everything Muraqabah does grows from the same root: awareness of Allah, expressed through learning, service, and companionship.</p>
+      </div>
+      <div class="grid cols-3">
+        <article class="card" data-reveal>
+          <div class="card__media"><img src="/images/photos/manuscript-open.webp" alt="An open classical manuscript" width="640" height="427" loading="lazy" /></div>
+          <div class="card__body">
+            <p class="meta"><span class="arabic" lang="ar">العِلم</span> &middot; Academics</p>
+            <h3>Academics</h3>
+            <p>Structured courses in the Islamic sciences: text-based learning from primary classical sources, live weekly classes, and one-day intensives with qualified teachers.</p>
+            <a class="text-link" href="/programs/">Explore programs &rarr;</a>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card__media"><img src="/images/photos/khidmah-volunteers.webp" alt="Volunteers preparing food packages" width="640" height="427" loading="lazy" /></div>
+          <div class="card__body">
+            <p class="meta"><span class="arabic" lang="ar">الخِدمة</span> &middot; Khidmah</p>
+            <h3>Khidmah</h3>
+            <p>Community service rooted in the Prophetic tradition: food relief, Ramadan campaigns, Qurbani distribution, and support for people at home and overseas.</p>
+            <a class="text-link" href="/impact/">See our impact &rarr;</a>
+          </div>
+        </article>
+        <article class="card" data-reveal>
+          <div class="card__media"><img src="/images/photos/event-audience-1.webp" alt="Students gathered at a Muraqabah program" width="640" height="427" loading="lazy" /></div>
+          <div class="card__body">
+            <p class="meta"><span class="arabic" lang="ar">الجَماعة</span> &middot; Community</p>
+            <h3>Community</h3>
+            <p>A living community of scholars, students, volunteers, donors, and seekers, growing through knowledge, companionship, service, and spiritual development.</p>
+            <a class="text-link" href="/volunteer/">Get involved &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Programs</p>
+        <h2>Current and upcoming programs</h2>
+      </div>
+      <div class="grid cols-2">
+        {featured.map((p) => <ProgramCard program={p} />)}
+      </div>
+      {spheres && (
+        <p class="muted" style="margin-top: 2rem;" data-reveal>
+          Looking for our first flagship program? <a href="/programs/spheres-of-faith/">Explore the Spheres of Faith archive</a>, or see <a href="/programs/">all programs</a>.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <!-- Scholars -->
+  <section class="section section--sand">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Our Scholars</p>
+        <h2>Learn with a living teacher</h2>
+        <p class="lede">Our students are not consuming content. They are connected to teachers trained within unbroken chains of scholarship at Dar al-Mustafa in Tarim, Yemen.</p>
+      </div>
+      <div class="grid cols-2">
+        {scholars.map((s) => (
+          <article class="card" data-reveal style="flex-direction: row; align-items: stretch;">
+            <a href={`/scholars/${s.slug}/`} class="arch" style="flex: 0 0 38%; margin: 1rem 0 1rem 1rem;" tabindex="-1" aria-hidden="true">
+              <img src={s.portrait} alt={s.portraitAlt} width="360" height="480" loading="lazy" style="height:100%; aspect-ratio: 3/4;" />
+            </a>
+            <div class="card__body" style="flex: 1;">
+              <p class="meta">{s.role}</p>
+              <h3><a href={`/scholars/${s.slug}/`} style="color:inherit; text-decoration:none;">{s.name}</a></h3>
+              <p>{s.short}</p>
+              <a class="text-link" href={`/scholars/${s.slug}/`}>Read full profile &rarr;</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact feature -->
+  <section class="section section--dark">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Khidmah</p>
+        <h2>Knowledge in action</h2>
+        <p class="lede muted">We believe knowledge must be accompanied by action. In our first year, khidmah campaigns fed more than 10,000 people at home and in Yemen.</p>
+      </div>
+      <div class="grid cols-2">
+        <article class="card" data-reveal style="background: var(--umber); border-color: var(--line-dark);">
+          <div class="card__media"><img src="/images/photos/khidmah-meals.webp" alt="Rows of prepared hot meals ready for delivery to shelters" width="640" height="427" loading="lazy" /></div>
+          <div class="card__body">
+            <p class="meta" style="color: var(--sand-deep);">Ramadan 2026 &middot; Completed</p>
+            <h3 style="color: var(--cream);">Feed 1,000+ People This Ramadan</h3>
+            <p class="muted">$14,725.80 raised in two weeks, with no administrative fees taken from this campaign: 380 family packages, 648 hot meals, and $3,850 in direct assistance across the GTA, Hamilton, and Tarim, Yemen.</p>
+            <a class="text-link" href="/campaigns/ramadan-2026/">Read the impact report &rarr;</a>
+          </div>
+        </article>
+        <article class="card" data-reveal style="background: var(--umber); border-color: var(--line-dark);">
+          <div class="card__media"><img src="/images/photos/khidmah-distribution-night.webp" alt="A night-time distribution of provisions in Tarim, Yemen" width="640" height="427" loading="lazy" /></div>
+          <div class="card__body">
+            <p class="meta" style="color: var(--sand-deep);">Eid al-Adha 2026 &middot; Completed</p>
+            <h3 style="color: var(--cream);">Qurbani 2026: Yemen</h3>
+            <p class="muted">More than $20,000 raised and roughly 100 animals facilitated, reaching over 300 households across Tarim through our Shaykh's trusted network, with the full distribution documented on film.</p>
+            <a class="text-link" href="/campaigns/qurbani-2026/">See the distribution &rarr;</a>
+          </div>
+        </article>
+      </div>
+      <div style="margin-top: 2.2rem;" data-reveal>
+        <a class="btn btn-outline-cream" href="/impact/">Explore Our Full Impact</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured video -->
+  <section class="section">
+    <div class="container split">
+      <div data-reveal>
+        <p class="eyebrow">Featured Video</p>
+        <h2>{featuredVideo.title}</h2>
+        <p class="muted" style="max-width: 34rem;">{featuredVideo.description}</p>
+        <div class="btn-row">
+          <a class="btn btn-outline" href="/videos/">Browse All Videos</a>
+          <a class="text-link" href={youtubeChannel} rel="noopener">Visit our YouTube channel &rarr;</a>
+        </div>
+      </div>
+      <div data-reveal>
+        <VideoEmbed id={featuredVideo.id} title={featuredVideo.title} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Turkey Rihla 2027 -->
+  <section class="section section--sand">
+    <div class="container split split--rev">
+      <div class="arch arch--framed" data-reveal style="order: 2;">
+        <img src="/images/photos/istanbul-silhouette.webp" alt="The Istanbul skyline silhouetted against a sunset sky" width="820" height="615" loading="lazy" style="aspect-ratio: 4/3;" />
+      </div>
+      <div data-reveal>
+        <p class="eyebrow">Turkey Rihla 2027</p>
+        <h2>Journey through sacred history</h2>
+        <p class="lede">
+          Step into a city shaped by centuries of scholarship, spirituality, leadership, and civilization. The 2027
+          Muraqabah Rihla will bring together structured learning, suhbah, exploration, and meaningful companionship
+          in Istanbul.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="/rihla-2027/#interest" data-event="Rihla Interest">Register Interest for 2027</a>
+          <a class="btn btn-outline" href="/rihla-2027/">Explore the Rihla</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Research and reflections -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Research &amp; Reflections</p>
+        <h2>Read and reflect</h2>
+      </div>
+      <div class="grid cols-3">
+        {articles.map((a) => (
+          <article class="card" data-reveal>
+            <a class="card__media" href={`/blog/${a.id}/`} tabindex="-1" aria-hidden="true">
+              <img src={a.data.heroImage} alt={a.data.heroAlt} width="640" height="427" loading="lazy" />
+            </a>
+            <div class="card__body">
+              <p class="meta">{a.data.category} &middot; {a.data.readingTime}</p>
+              <h3 style="font-size: 1.35rem;"><a href={`/blog/${a.id}/`} style="color:inherit; text-decoration:none;">{a.data.title}</a></h3>
+              <p>{a.data.description}</p>
+              <a class="text-link" href={`/blog/${a.id}/`}>Read article &rarr;</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery preview -->
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Gallery</p>
+        <h2>Moments from the work</h2>
+      </div>
+      <div class="gallery-grid" style="grid-template-columns: repeat(4, 1fr);">
+        {galleryPreview.map((g) => (
+          <div class="frame" data-reveal><img src={g.src} alt={g.alt} width="480" height="360" loading="lazy" style="aspect-ratio: 4/3; object-fit: cover; width: 100%;" /></div>
+        ))}
+      </div>
+      <div style="margin-top: 1.8rem;" data-reveal>
+        <a class="btn btn-outline" href="/gallery/">View Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  {features.testimonials && testimonials.length > 0 && (
+    <section class="section section--sand">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <p class="eyebrow">Community Voices</p>
+          <h2>What our students say</h2>
+        </div>
+        <div class="grid cols-3">
+          {testimonials.map((t) => (
+            <blockquote class="card" data-reveal style="padding: 1.8rem; margin: 0;">
+              <p style="font-family: var(--font-serif); font-size: 1.25rem; font-style: italic;">{t.quote}</p>
+              <footer class="meta">{t.name} &middot; {t.context}</footer>
+            </blockquote>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Volunteer -->
+  <section class="section section--sand">
+    <div class="container split">
+      <div data-reveal>
+        <p class="eyebrow">Volunteer</p>
+        <h2>Serve with us</h2>
+        <p class="lede">
+          Volunteers carry this work: programs, events, food distribution, media, photography and video, design,
+          administration, fundraising, logistics, research, and community outreach.
+        </p>
+        <a class="btn btn-primary" href="/volunteer/" data-event="Volunteer Click">Volunteer With Muraqabah</a>
+      </div>
+      <div class="frame" data-reveal>
+        <img src="/images/photos/khidmah-volunteers-night.webp" alt="Muraqabah volunteers gathered during an evening distribution" width="760" height="507" loading="lazy" style="aspect-ratio: 3/2;" />
+      </div>
+    </div>
+  </section>
+
+  <DonateBand />
+  <SignupBand />
+</Base>

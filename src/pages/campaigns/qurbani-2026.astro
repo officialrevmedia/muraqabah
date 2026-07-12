@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import DonateBand from '../../components/DonateBand.astro';
+import { qurbani2026 as q } from '../../data/campaigns';
+import { featuredVideo } from '../../data/videos';
+import { videoSchema } from '../../lib/schema';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Campaigns', href: '/campaigns/' },
+  { name: 'Qurbani 2026', href: '/campaigns/qurbani-2026/' }
+];
+---
+<Base
+  title="Qurbani 2026: Yemen | Muraqabah Initiative"
+  description="More than $20,000 raised and roughly 100 animals facilitated, reaching over 300 households across Tarim, Yemen through our Shaykh's trusted network, with the full distribution documented on film."
+  schema={[videoSchema(featuredVideo)]}
+>
+  <div class="page-hero" style="padding-bottom: 0;">
+    <div class="container"><Breadcrumbs items={crumbs} /></div>
+  </div>
+
+  <section class="section--tight">
+    <div class="container split">
+      <div data-reveal>
+        <span class="badge badge--done">Eid al-Adha 2026 &middot; Completed</span>
+        <h1 style="margin-top: 1rem;">{q.title}</h1>
+        <p class="lede">{q.headline}</p>
+        <p class="muted">{q.summary}</p>
+      </div>
+      <div class="arch arch--framed" data-reveal>
+        <img src="/images/photos/khidmah-rice-carry.webp" alt="Carrying provisions home through a street in Tarim, Yemen" width="720" height="900" loading="lazy" style="aspect-ratio: 4/5;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container"><StatGrid stats={q.stats} /></div>
+  </section>
+
+  <section class="section">
+    <div class="container container--mid">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Documented on Film</p>
+        <h2>Watch the distribution</h2>
+        <p class="lede">Full documentation of the Qurbani 2026 distribution in Tarim, carried out through Shaykh Zakaria Abdilaziz's trusted network on the ground.</p>
+      </div>
+      <div data-reveal><VideoEmbed id={featuredVideo.id} title={featuredVideo.title} /></div>
+    </div>
+  </section>
+
+  <DonateBand />
+</Base>

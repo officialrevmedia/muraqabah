@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { scholars } from '../../data/scholars';
+import { personSchema } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return scholars.map((s) => ({ params: { slug: s.slug }, props: { scholar: s } }));
+}
+const { scholar: s } = Astro.props;
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Scholars', href: '/scholars/' },
+  { name: s.name, href: `/scholars/${s.slug}/` }
+];
+---
+<Base
+  title={`${s.name} | Muraqabah Initiative`}
+  description={s.short}
+  ogImage={s.portrait}
+  schema={[personSchema({ name: s.name, role: s.role, url: `/scholars/${s.slug}/`, image: s.portrait, description: s.short })]}
+>
+  <div class="page-hero" style="padding-bottom: 0;">
+    <div class="container"><Breadcrumbs items={crumbs} /></div>
+  </div>
+  <section class="section--tight" style="padding-bottom: clamp(4rem, 8vw, 6rem);">
+    <div class="container split split--rev" style="align-items: start;">
+      <div data-reveal style="order: 2;">
+        <div class="arch arch--framed">
+          <img src={s.portrait} alt={s.portraitAlt} width="640" height="800" style="aspect-ratio: 4/5; object-position: top;" />
+        </div>
+        <div style="margin-top: 2rem;">
+          <h3 style="font-size: 1.15rem;">Training and authorization</h3>
+          <ul class="muted" style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+            {s.training.map((t) => <li>{t}</li>)}
+          </ul>
+        </div>
+      </div>
+      <div data-reveal>
+        <p class="eyebrow">{s.role}</p>
+        <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.4rem);">{s.name}</h1>
+        <div class="prose">
+          {s.bio.map((para) => <p>{para}</p>)}
+        </div>
+        <h3 style="margin-top: 2.2rem; font-size: 1.15rem;">Programs</h3>
+        <ul style="padding-left: 1.2rem; display: grid; gap: 0.5rem;">
+          {s.programs.map((p) => <li><a href={p.href}>{p.label}</a></li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>

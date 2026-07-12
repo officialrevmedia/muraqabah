@@ -1,0 +1,38 @@
+---
+import { site } from '../config/site';
+import { footerNav } from '../data/navigation';
+import { social } from '../data/social';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-main">
+      <div>
+        <img class="footer-logo" src="/images/brand/logo-colour-dark.png" alt="Muraqabah Initiative" width="130" height="179" loading="lazy" />
+        <p>
+          Traditional Islamic education, spiritual formation, and sincere community service for seekers in the
+          Greater Toronto Area, across Canada, and online.
+        </p>
+        <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+      </div>
+      {Object.entries(footerNav).map(([heading, items]) => (
+        <nav aria-label={heading}>
+          <h4>{heading}</h4>
+          <ul>
+            {items.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+          </ul>
+        </nav>
+      ))}
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-tagline">{site.tagline}</span>
+      <ul style="list-style:none; display:flex; flex-wrap:wrap; gap:1.1rem; margin:0; padding:0;">
+        {social.map((s) => <li><a href={s.href} rel="noopener">{s.label}</a></li>)}
+      </ul>
+      <span>
+        &copy; {year} {site.name} &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/accessibility/">Accessibility</a>
+      </span>
+    </div>
+  </div>
+</footer>

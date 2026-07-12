@@ -1,0 +1,128 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import Faq from '../../components/Faq.astro';
+import { faqSchema } from '../../lib/schema';
+import { links, site } from '../../config/site';
+import { ramadan2026, qurbani2026 } from '../../data/campaigns';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Donate', href: '/donate/' }
+];
+
+const supports = [
+  { title: 'Sacred knowledge', desc: 'Courses, intensives, and weekly programs taught by qualified scholars, kept accessible to the community.' },
+  { title: 'Our teachers', desc: 'Fair compensation for the scholars who dedicate their lives to preserving and transmitting the tradition.' },
+  { title: 'Khidmah campaigns', desc: 'Food security work at home in the Greater Toronto Area and Hamilton, and abroad in Tarim, Yemen.' },
+  { title: 'Educational resources', desc: 'Recordings, articles, and materials that extend each program beyond the classroom.' },
+  { title: 'Growth', desc: 'New programs, new partnerships, and a growing reach across Canada and beyond.' }
+];
+
+const trust = [
+  { value: '$14,725', label: 'Raised in Ramadan 2026, delivered with zero administrative fees for that campaign' },
+  { value: '$20,000+', label: 'Raised for Qurbani 2026, reaching more than 300 households in Tarim, Yemen' },
+  { value: '9', label: 'Partner organizations who worked with us during Ramadan 2026' },
+  { value: '10,000+', label: 'People fed through khidmah campaigns in our first year' }
+];
+
+const faqs = [
+  {
+    q: 'How is my donation used?',
+    a: 'Donations sustain our educational programs, compensate our teachers, fund khidmah campaigns at home and abroad, and support the day-to-day work of the initiative. During Ramadan 2026, every dollar donated to the Feed 1,000 People campaign went directly to food relief, with zero administrative fees for that campaign.'
+  },
+  {
+    q: 'Will I receive a tax receipt?',
+    a: 'Registered charitable status is a goal Muraqabah Initiative is working toward. Until that is in place, donations are gifts of support and official donation tax receipts are not issued.'
+  },
+  {
+    q: 'Is online giving secure?',
+    a: 'Yes. Donations are processed through Zeffy, a payment platform built for nonprofits. Muraqabah does not store your card details.'
+  },
+  {
+    q: 'Can I give toward a specific campaign?',
+    a: 'Yes. Seasonal campaigns such as Ramadan food relief and Qurbani have their own dedicated pages when active. The general donation form supports the mission as a whole.'
+  },
+  {
+    q: 'Can I support Muraqabah in ways other than money?',
+    a: 'Absolutely. Volunteer with our khidmah and events teams, partner with us as an organization, or simply share our programs with people who would benefit. Every form of support matters.'
+  }
+];
+---
+<Base
+  title="Donate | Muraqabah Initiative"
+  description="Support Muraqabah Initiative. Your donation sustains traditional Islamic education, fairly compensates scholars, and funds food relief campaigns in Canada and Yemen."
+  schema={[faqSchema(faqs)]}
+>
+  <PageHero
+    eyebrow="Donate"
+    title="Preserve knowledge. Transform hearts."
+    lede="Sacred knowledge survives because communities choose to carry it. Your support keeps qualified scholars teaching, keeps programs accessible, and keeps food moving to families who need it."
+    crumbs={crumbs}
+  >
+    <div class="btn-row" style="margin-top: 1.5rem;">
+      <a class="btn btn-primary" href={links.donate} rel="noopener" data-event="Donate Click">Donate Now</a>
+      <a class="btn btn-outline" href="#faq">Common Questions</a>
+    </div>
+  </PageHero>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">What Your Gift Sustains</p>
+        <h2>Where your support goes</h2>
+      </div>
+      <div class="grid cols-3">
+        {supports.map((s) => (
+          <article class="card" data-reveal>
+            <div class="card__body">
+              <h3 style="font-size: 1.15rem;">{s.title}</h3>
+              <p>{s.desc}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Accountability</p>
+        <h2>A record you can trust</h2>
+        <p class="muted">These figures come from our own campaign reports. Read the details on our <a href="/impact/">impact page</a>.</p>
+      </div>
+      <StatGrid stats={trust} />
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container container--narrow center">
+      <div data-reveal>
+        <p class="eyebrow">Give Today</p>
+        <h2>Make your contribution</h2>
+        <p class="muted" style="max-width: 34rem; margin-inline: auto;">
+          Giving takes about a minute through our secure Zeffy donation page. Choose the amount that is right
+          for you, and know that it becomes part of a continuing chain of benefit.
+        </p>
+        <div class="btn-row" style="justify-content: center; margin-top: 1.5rem;">
+          <a class="btn btn-primary" href={links.donate} rel="noopener" data-event="Donate Click">Give Through Zeffy</a>
+        </div>
+        <p class="meta" style="margin-top: 1.25rem;">
+          Prefer to arrange a gift directly or discuss sponsorship? Email <a href={`mailto:${site.email}`}>{site.email}</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container container--narrow">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2>Donation FAQ</h2>
+      </div>
+      <Faq items={faqs} />
+    </div>
+  </section>
+</Base>

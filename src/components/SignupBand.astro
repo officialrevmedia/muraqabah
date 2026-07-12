@@ -1,0 +1,24 @@
+---
+import { forms, site } from '../config/site';
+import { whatsapp } from '../data/social';
+import FormShell from './FormShell.astro';
+import Field from './Field.astro';
+---
+<section class="section section--sand section--tight">
+  <div class="container grid cols-2" style="align-items: center;">
+    <div data-reveal>
+      <h2 style="font-size: clamp(1.6rem, 2.6vw, 2.1rem);">Stay close to the work</h2>
+      <p class="muted" style="max-width: 30rem;">
+        Program announcements, campaign updates, and new resources, delivered occasionally and without noise.
+        You can also join the conversation directly in our WhatsApp Community.
+      </p>
+      <a class="btn btn-outline" href={whatsapp} rel="noopener" data-event="WhatsApp Join">Join Our WhatsApp Community</a>
+    </div>
+    <div data-reveal>
+      <FormShell endpoint={forms.newsletter} name="Newsletter signup" submitLabel="Subscribe" eventName="Newsletter Signup">
+        <Field label="Email address" name="email" type="email" required autocomplete="email" />
+      </FormShell>
+      <p class="form-note" style="margin-top: 0.8rem;">We only use your email for Muraqabah updates. Unsubscribe any time by writing to {site.email}.</p>
+    </div>
+  </div>
+</section>

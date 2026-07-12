@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import SignupBand from '../../components/SignupBand.astro';
+import { getCollection } from 'astro:content';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Research', href: '/research/' }
+];
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const categories = [
+  { name: 'Sacred Knowledge', blurb: 'Foundational concepts of the Islamic sciences, explained with care and precision.' },
+  { name: 'Hadith', blurb: 'The sciences of Prophetic narration, chains of transmission, and their preservation.' },
+  { name: 'Spirituality', blurb: 'Tazkiyah, muraqabah, and the inner dimensions of practice.' },
+  { name: 'Community and Khidmah', blurb: 'Service, social responsibility, and faith expressed through action.' },
+  { name: 'Course Notes', blurb: 'Companion material and summaries from Muraqabah programs.' },
+  { name: 'Impact Reports', blurb: 'Transparent accounts of what your support accomplished.' }
+];
+---
+<Base
+  title="Research and Reflections | Muraqabah Initiative"
+  description="Essays, course companions, and reflections on sacred knowledge, hadith sciences, spirituality, and community service, reviewed for accuracy before publication."
+>
+  <PageHero
+    eyebrow="Research and Reflections"
+    title="Writing rooted in the tradition"
+    lede="Short essays and companions that extend what happens in our classrooms. Religious content is reviewed for accuracy before it is marked as verified, and each article states its review status plainly."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Areas of Focus</p>
+        <h2>What we write about</h2>
+      </div>
+      <div class="grid cols-3">
+        {categories.map((c) => (
+          <article class="card" data-reveal>
+            <div class="card__body">
+              <h3 style="font-size: 1.15rem;">{c.name}</h3>
+              <p>{c.blurb}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Latest</p>
+        <h2>Recent articles</h2>
+      </div>
+      <div class="grid cols-3">
+        {articles.map((a) => (
+          <article class="card" data-reveal>
+            <a class="card__media" href={`/blog/${a.id}/`}>
+              <img src={a.data.heroImage} alt={a.data.heroAlt} loading="lazy" decoding="async" width="640" height="420" />
+            </a>
+            <div class="card__body">
+              <p class="meta">{a.data.category} &middot; {a.data.readingTime}</p>
+              <h3 style="font-size: 1.2rem;"><a href={`/blog/${a.id}/`}>{a.data.title}</a></h3>
+              <p>{a.data.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div class="center" style="margin-top: 2rem;" data-reveal>
+        <a class="btn btn-outline" href="/blog/">Browse All Articles</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--narrow">
+      <div class="notice" data-reveal>
+        <p style="margin: 0;">
+          <strong>Our review policy.</strong> Articles that address religious rulings, hadith, or Qur'anic content
+          are reviewed by a qualified scholar before being marked as verified. Where review is still in progress,
+          the article says so clearly. If you notice an error, please write to us so we can correct it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <SignupBand />
+</Base>

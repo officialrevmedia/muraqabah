@@ -1,0 +1,149 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Faq from '../../components/Faq.astro';
+import SignupBand from '../../components/SignupBand.astro';
+import { links, pricing } from '../../config/site';
+import { courseSchema, faqSchema } from '../../lib/schema';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Programs', href: '/programs/' },
+  { name: 'Chains of Trust', href: '/programs/chains-of-trust/' }
+];
+const learn = [
+  'What defines a sahih (sound) hadith',
+  'What makes a hadith da\u02bcif (weak), and why not all weakness is the same',
+  'The meaning and function of the sanad, the chain of transmission',
+  'Connected and disconnected chains, and elevated and lowered chains',
+  'How to tell reliable narrators from problematic ones',
+  'How scholars evaluated narrators through ilm al-rijal',
+  'Why qualified scholars may differ in grading the same hadith',
+  'How the classifications were developed, applied, and preserved'
+];
+const included = [
+  'A complete guided study of Al-Bayquniyyah, line by line',
+  'Weekly memorization with in-class recitation',
+  'Practical exercises applying hadith terminology to real examples',
+  'Regular homework assignments to solidify comprehension',
+  'Instructor-led clarification of classical definitions and scholarly nuances',
+  'A final written project',
+  'Access to class recordings for enrolled students'
+];
+const forWhom = [
+  'Students beginning their journey in the Islamic sciences',
+  'Seekers who want a strong, authentic foundation',
+  'Educators, khatibs, and community leaders',
+  'Anyone serious about engaging with the Sunnah responsibly'
+];
+const faqs = [
+  { q: 'When does the class meet?', a: 'Live every Sunday from 2:00 to 3:00 PM Eastern Time, on Zoom. Enrolled students also receive access to recordings.' },
+  { q: 'What text is studied?', a: 'The course is a complete, guided, line-by-line study of the classical poem Al-Bayquniyyah, a foundational primer in the sciences of hadith.' },
+  { q: 'How much does enrolment cost?', a: `Enrolment is ${pricing.chainsOfTrust.amount} ${pricing.chainsOfTrust.period}, processed securely through Zeffy. ${pricing.chainsOfTrust.note}` },
+  { q: 'Do I need prior knowledge?', a: 'No. The course is foundational and designed to welcome beginners, while still offering depth for more experienced students. Understanding the hadith sciences is foundational for any serious seeker.' },
+  { q: 'Is there homework?', a: 'Yes. The course includes weekly memorization, practical terminology exercises, regular homework, and a final written project, so that students finish with a working grasp of the material.' },
+  { q: 'Who teaches the course?', a: 'Shaykh Nuh Sanders, who studied full time for more than six years at Dar al-Mustafa in Tarim, Yemen. You can read his full profile on our scholars page.' }
+];
+---
+<Base
+  title="Chains of Trust: Foundations of Hadith Sciences | Muraqabah Initiative"
+  description="A live weekly online course with Shaykh Nuh Sanders. Study Al-Bayquniyyah line by line and learn how the words of the Prophet were preserved, examined, and classified. Enrolling now."
+  ogImage="/images/posters/chains-of-trust-poster.webp"
+  schema={[
+    courseSchema({
+      name: 'Chains of Trust: Foundations of Hadith Sciences',
+      description: 'A live weekly online study of Al-Bayquniyyah, introducing the classical methodology of hadith criticism with Shaykh Nuh Sanders.',
+      url: '/programs/chains-of-trust/',
+      teacher: 'Shaykh Nuh Sanders',
+      mode: 'online',
+      schedule: 'Sundays, 2:00 to 3:00 PM Eastern Time'
+    }),
+    faqSchema(faqs.map((f) => ({ q: f.q, a: f.a })))
+  ]}
+>
+  <div class="page-hero" style="padding-bottom: 0;">
+    <div class="container"><Breadcrumbs items={crumbs} /></div>
+  </div>
+
+  <section class="section--tight">
+    <div class="container split">
+      <div data-reveal>
+        <span class="badge badge--live">Enrolling Now</span>
+        <h1 style="margin-top: 1rem;">Chains of Trust</h1>
+        <p class="lede">Foundations of Hadith Sciences, taught line by line through the classical poem Al-Bayquniyyah with Shaykh Nuh Sanders.</p>
+        <p>The preservation of Islam rests upon the precision of its transmission. This course is a guided initiation into the tools scholars used to distinguish truth from error, strength from weakness, and reliability from fabrication.</p>
+        <div class="btn-row" style="margin-top: 1.4rem;">
+          <a class="btn btn-primary" href={links.chainsOfTrust} rel="noopener" data-event="Chains Register Click">Register Through Zeffy</a>
+          <a class="btn btn-outline" href="/scholars/shaykh-nuh-sanders/">Meet the Teacher</a>
+        </div>
+        <p class="muted" style="font-size: 0.86rem; margin-top: 1rem;">Enrolment opens a secure Zeffy page. {pricing.chainsOfTrust.amount} {pricing.chainsOfTrust.period}.</p>
+      </div>
+      <div class="arch arch--framed" data-reveal>
+        <img src="/images/photos/manuscript-books.webp" alt="Classical bound manuscripts and texts on a study table" width="720" height="900" loading="lazy" style="aspect-ratio: 4/5;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container container--mid">
+      <dl class="facts" data-reveal>
+        <div><dt>Teacher</dt><dd>Shaykh Nuh Sanders</dd></div>
+        <div><dt>Schedule</dt><dd>Sundays, 2:00 to 3:00 PM Eastern Time</dd></div>
+        <div><dt>Format</dt><dd>Live online through Zoom, with recordings for enrolled students</dd></div>
+        <div><dt>Text</dt><dd>Al-Bayquniyyah, studied line by line</dd></div>
+        <div><dt>Level</dt><dd>Foundational, open to beginners and serious students alike</dd></div>
+        <div><dt>Enrolment</dt><dd>{pricing.chainsOfTrust.amount} {pricing.chainsOfTrust.period}, through Zeffy</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div data-reveal>
+        <p class="eyebrow">What You Will Learn</p>
+        <h2>A practical grasp of the science of hadith</h2>
+        <ul style="padding-left: 1.2rem; display: grid; gap: 0.6rem;">
+          {learn.map((item) => <li>{item}</li>)}
+        </ul>
+        <p class="muted" style="margin-top: 1.2rem;">By the end of the course, students no longer view hadith as isolated texts, but as carefully transmitted trusts carried by real people, across real generations, under strict scholarly scrutiny.</p>
+      </div>
+      <div data-reveal>
+        <p class="eyebrow">What Is Included</p>
+        <h2>Course structure and methodology</h2>
+        <ul style="padding-left: 1.2rem; display: grid; gap: 0.6rem;">
+          {included.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container container--mid">
+      <div class="section-head center" data-reveal style="margin-inline: auto;">
+        <p class="eyebrow" style="justify-content: center;">Who It Is For</p>
+        <h2>Understanding hadith sciences is foundational for the seeker</h2>
+      </div>
+      <div class="grid cols-2" data-reveal>
+        {forWhom.map((item) => (
+          <div class="card" style="padding: 1.3rem 1.5rem;"><p style="margin: 0; font-weight: 600;">{item}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--mid">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2>Frequently asked questions</h2>
+      </div>
+      <Faq items={faqs} />
+      <div class="btn-row" style="margin-top: 2.5rem;" data-reveal>
+        <a class="btn btn-primary" href={links.chainsOfTrust} rel="noopener" data-event="Chains Register Click">Register Through Zeffy</a>
+        <a class="btn btn-outline" href="/programs/">Back to All Programs</a>
+      </div>
+    </div>
+  </section>
+
+  <SignupBand />
+</Base>

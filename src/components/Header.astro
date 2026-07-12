@@ -1,0 +1,51 @@
+---
+import { primaryNav } from '../data/navigation';
+const current = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? current === '/' : current.startsWith(href));
+---
+
+<header class="site-header">
+  <div class="container nav-bar">
+    <a class="brand" href="/" aria-label="Muraqabah Initiative home">
+      <img src="/images/brand/emblem-colour.png" alt="" width="34" height="38" />
+      <span>muraqabah</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        {primaryNav.map((item) => (
+          <li><a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-outline" href="/programs/">Explore Programs</a>
+      <a class="btn btn-primary" href="/donate/" data-event="Donate Click">Donate</a>
+      <button class="nav-toggle" type="button" data-nav-open aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="container">
+    <div class="mobile-nav__top">
+      <a class="brand" href="/" style="color: var(--cream);">
+        <img src="/images/brand/emblem-cream.png" alt="" width="34" height="38" />
+        <span>muraqabah</span>
+      </a>
+      <button class="nav-close" type="button" data-nav-close aria-label="Close menu">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 3l12 12M15 3L3 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <ul>
+      <li><a href="/">Home</a></li>
+      {primaryNav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      <li><a href="/donate/">Donate</a></li>
+    </ul>
+    <div class="btn-row">
+      <a class="btn btn-cream" href="/programs/">Explore Programs</a>
+      <a class="btn btn-outline-cream" href="/donate/">Donate</a>
+    </div>
+  </div>
+</div>

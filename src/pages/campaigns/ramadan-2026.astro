@@ -1,0 +1,96 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import DonateBand from '../../components/DonateBand.astro';
+import { ramadan2026 as r } from '../../data/campaigns';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Campaigns', href: '/campaigns/' },
+  { name: 'Ramadan 2026', href: '/campaigns/ramadan-2026/' }
+];
+---
+<Base
+  title="Feed 1,000+ People This Ramadan: 2026 Impact Report | Muraqabah Initiative"
+  description="In two weeks, our community raised $14,725.80 with no administrative fees taken from this campaign: 380 family packages, 648 hot meals, and $3,850 in direct assistance across the GTA, Hamilton, and Tarim, Yemen."
+  ogImage="/images/posters/feed-1000-flyer.webp"
+>
+  <div class="page-hero" style="padding-bottom: 0;">
+    <div class="container"><Breadcrumbs items={crumbs} /></div>
+  </div>
+
+  <section class="section--tight">
+    <div class="container split">
+      <div data-reveal>
+        <span class="badge badge--done">Ramadan 2026 &middot; Completed</span>
+        <h1 style="margin-top: 1rem;">{r.title}</h1>
+        <p class="lede">{r.headline}</p>
+        <p class="muted">{r.summary}</p>
+      </div>
+      <div class="arch arch--framed" data-reveal>
+        <img src="/images/photos/khidmah-grocery-bags.webp" alt="Family food packages lined up and ready for distribution" width="720" height="900" loading="lazy" style="aspect-ratio: 4/5;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container"><StatGrid stats={r.stats} /></div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid cols-3">
+        <div data-reveal>
+          <h3>Family packages</h3>
+          <p class="meta" style="color: var(--rust);">380 distributed</p>
+          <ul class="muted" style="padding-left: 1.1rem; display: grid; gap: 0.4rem; font-size: 0.95rem;">
+            {r.breakdown.packages.map((x) => <li>{x}</li>)}
+          </ul>
+        </div>
+        <div data-reveal>
+          <h3>Hot meals</h3>
+          <p class="meta" style="color: var(--rust);">648 delivered</p>
+          <ul class="muted" style="padding-left: 1.1rem; display: grid; gap: 0.4rem; font-size: 0.95rem;">
+            {r.breakdown.meals.map((x) => <li>{x}</li>)}
+          </ul>
+        </div>
+        <div data-reveal>
+          <h3>Direct assistance</h3>
+          <p class="meta" style="color: var(--rust);">$3,850 given</p>
+          <ul class="muted" style="padding-left: 1.1rem; display: grid; gap: 0.4rem; font-size: 0.95rem;">
+            {r.breakdown.monetary.map((x) => <li>{x}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container container--mid center">
+      <blockquote data-reveal style="font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.1rem); font-style: italic; line-height: 1.4; color: var(--cream);">
+        He is not a believer whose stomach is filled while his neighbour goes hungry.
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Partners</p>
+        <h2>Nine organizations, one effort</h2>
+      </div>
+      <div class="grid cols-3">
+        {r.partners.map((p) => (
+          <div class="card" data-reveal style="padding: 1.5rem;">
+            <h3 style="font-size: 1.15rem; margin: 0 0 0.2rem;">{p.name}</h3>
+            <p class="meta" style="color: var(--rust);">{p.place}</p>
+            <p class="muted" style="margin: 0.4rem 0 0; font-size: 0.92rem;">{p.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <DonateBand />
+</Base>

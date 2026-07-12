@@ -1,0 +1,92 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SignupBand from '../../components/SignupBand.astro';
+import { getCollection, render } from 'astro:content';
+import { articleSchema } from '../../lib/schema';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles', ({ data }) => !data.draft);
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article }
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+const d = article.data;
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Blog', href: '/blog/' },
+  { name: d.title, href: `/blog/${article.id}/` }
+];
+
+const fmt = (date: Date) => date.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const schema = articleSchema({
+  title: d.title,
+  description: d.description,
+  url: `/blog/${article.id}/`,
+  image: d.heroImage,
+  author: d.author,
+  pubDate: d.pubDate,
+  updatedDate: d.updatedDate
+});
+---
+<Base title={`${d.title} | Muraqabah Initiative`} description={d.description} ogImage={d.heroImage} schema={[schema]}>
+  <div class="page-hero" style="padding-bottom: 1.5rem;">
+    <div class="container container--narrow">
+      <Breadcrumbs items={crumbs} />
+      <p class="eyebrow">{d.category}</p>
+      <h1>{d.title}</h1>
+      <p class="lede">{d.description}</p>
+      <p class="meta" style="margin-top: 1rem;">
+        By {d.author} &middot; {fmt(d.pubDate)}
+        {d.updatedDate && ` · Updated ${fmt(d.updatedDate)}`}
+        &middot; {d.readingTime}
+      </p>
+    </div>
+  </div>
+
+  <div class="container container--narrow">
+    <img
+      class="arch"
+      src={d.heroImage}
+      alt={d.heroAlt}
+      width="1200"
+      height="720"
+      style="width: 100%; aspect-ratio: 5 / 3; object-fit: cover;"
+      data-reveal
+    />
+  </div>
+
+  <section class="section section--tight">
+    <div class="container container--narrow">
+      {d.reviewStatus === 'reviewed' ? (
+        <div class="notice" style="margin-bottom: 2rem;">
+          <p style="margin: 0;"><strong>Reviewed for accuracy.</strong> {d.reviewer}.</p>
+        </div>
+      ) : (
+        <div class="notice" style="margin-bottom: 2rem;">
+          <p style="margin: 0;">
+            <strong>Pending scholarly review.</strong> This article is educational in nature and is awaiting formal
+            review. Please consult a qualified scholar for religious rulings.
+          </p>
+        </div>
+      )}
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <hr style="border: 0; border-top: 1px solid var(--line); margin: 3rem 0 2rem;" />
+      <p class="meta">
+        Questions or corrections? Write to us through the <a href="/contact/">contact page</a>.
+      </p>
+    </div>
+  </section>
+
+  <SignupBand />
+</Base>

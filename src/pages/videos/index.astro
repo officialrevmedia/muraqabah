@@ -1,0 +1,68 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import { featuredVideo, videos } from '../../data/videos';
+import { youtubeChannel } from '../../data/social';
+import { videoSchema } from '../../lib/schema';
+---
+<Base
+  title="Videos | Muraqabah Initiative"
+  description="Watch talks, khidmah updates, and course material from Muraqabah Initiative. Full lessons and lectures are published freely on our YouTube channel."
+  schema={[videoSchema(featuredVideo)]}
+>
+  <PageHero
+    eyebrow="Videos"
+    title="Knowledge, offered freely"
+    lede="Full lessons and lectures are published for free on our YouTube channel. No paywall stands between a seeker and sound scholarship."
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'Media', href: '/media/' }, { name: 'Videos', href: '/videos/' }]}
+  />
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Featured</p>
+        <h2>{featuredVideo.title}</h2>
+      </div>
+      <div class="split">
+        <div data-reveal><VideoEmbed id={featuredVideo.id} title={featuredVideo.title} /></div>
+        <div data-reveal>
+          <p class="meta" style="color: var(--rust);">{featuredVideo.category}{featuredVideo.date ? ` \u00B7 ${featuredVideo.date}` : ''}</p>
+          <p class="muted">{featuredVideo.description}</p>
+          <a class="btn btn-outline" href={youtubeChannel} rel="noopener" data-event="YouTube Visit">Visit Our YouTube Channel</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {videos.length > 0 ? (
+    <section class="section">
+      <div class="container">
+        <div class="section-head" data-reveal><p class="eyebrow">Library</p><h2>More from Muraqabah</h2></div>
+        <div class="grid cols-3">
+          {videos.map((v) => (
+            <article class="card" data-reveal>
+              <VideoEmbed id={v.id} title={v.title} />
+              <div class="card__body">
+                <p class="meta">{v.category}{v.date ? ` \u00B7 ${v.date}` : ''}</p>
+                <h3 style="font-size: 1.2rem;">{v.title}</h3>
+                <p>{v.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="section">
+      <div class="container container--narrow center">
+        <div class="notice" data-reveal>
+          <p style="margin: 0;">Our curated video library is growing. In the meantime, the full collection of talks and lessons lives on our YouTube channel.</p>
+        </div>
+        <div style="margin-top: 1.5rem;" data-reveal>
+          <a class="btn btn-primary" href={youtubeChannel} rel="noopener" data-event="YouTube Visit">Watch on YouTube</a>
+        </div>
+      </div>
+    </section>
+  )}
+</Base>

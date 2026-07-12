@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SignupBand from '../../components/SignupBand.astro';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Programs', href: '/programs/' },
+  { name: 'Gardens of Paradise', href: '/programs/gardens-of-paradise/' }
+];
+const themes = [
+  { t: 'The responsibility of speech', d: 'How the tongue carries weight in this life and the next, and why words are a trust.' },
+  { t: 'Prophetic speech ethics', d: 'The manners of speech drawn from the example of the Prophet \uFDFA.' },
+  { t: 'Sacred law and the tongue', d: 'What the tradition teaches about truthfulness, restraint, and harmful speech.' },
+  { t: 'Purification of expression', d: 'Refining not only what we say, but the heart from which speech flows.' },
+  { t: 'Reflection and dhikr', d: 'Turning the tongue toward remembrance as a discipline of the heart.' },
+  { t: 'Suhbah and application', d: 'Learning in companionship, and carrying the lessons into daily community life.' }
+];
+---
+<Base
+  title="Gardens of Paradise: Weight of Words | Muraqabah Initiative"
+  description="A forthcoming weekly study circle with Shaykh Zakaria Abdilaziz. The opening series, Weight of Words, examines the responsibility of speech and the purification of expression in the Prophetic tradition."
+>
+  <div class="page-hero" style="padding-bottom: 0;">
+    <div class="container"><Breadcrumbs items={crumbs} /></div>
+  </div>
+
+  <section class="section--tight">
+    <div class="container split">
+      <div data-reveal>
+        <span class="badge badge--soon">Coming Soon</span>
+        <h1 style="margin-top: 1rem;">Gardens of Paradise</h1>
+        <p class="lede">A recurring weekly study circle with Shaykh Zakaria Abdilaziz. The opening series, Weight of Words, turns to one of the most consequential and most overlooked subjects in the spiritual life: how we speak.</p>
+        <p>Full scheduling, format, and registration details are being finalized. Register your interest and we will let you know the moment enrolment opens.</p>
+        <div class="btn-row" style="margin-top: 1.4rem;">
+          <a class="btn btn-primary" href="/contact/?subject=gardens-of-paradise" data-event="Gardens Interest">Register Interest</a>
+          <a class="btn btn-outline" href="/scholars/shaykh-zakaria-abdilaziz/">Meet the Teacher</a>
+        </div>
+      </div>
+      <div class="arch arch--framed" data-reveal>
+        <img src="/images/photos/istanbul-garden.webp" alt="A mosque courtyard garden with trees and stone pathways" width="720" height="900" loading="lazy" style="aspect-ratio: 4/5;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Weight of Words</p>
+        <h2>Themes of the opening series</h2>
+        <p class="lede">The following themes are illustrative of the direction of the series. The final curriculum will be confirmed before enrolment opens.</p>
+      </div>
+      <div class="grid cols-3">
+        {themes.map((theme) => (
+          <div class="card" data-reveal style="padding: 1.6rem;">
+            <h3 style="font-size: 1.25rem;">{theme.t}</h3>
+            <p class="muted" style="margin: 0;">{theme.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand section--tight">
+    <div class="container container--narrow center">
+      <p class="notice" data-reveal>This page will be updated with confirmed dates, format, and enrolment details. Nothing here should be taken as a fixed schedule until it is announced.</p>
+    </div>
+  </section>
+
+  <SignupBand />
+</Base>

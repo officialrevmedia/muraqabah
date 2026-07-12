@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FormShell from '../../components/FormShell.astro';
+import Field from '../../components/Field.astro';
+import DonateBand from '../../components/DonateBand.astro';
+import { forms } from '../../config/site';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Volunteer', href: '/volunteer/' }
+];
+
+const areas = [
+  { name: 'Khidmah and food distribution', desc: 'Packing family packages, preparing hot meals, and helping with deliveries during campaigns.' },
+  { name: 'Event support', desc: 'Registration, setup, hospitality, and takedown at intensives and weekly programs.' },
+  { name: 'Media and design', desc: 'Photography, video, graphics, and social media for programs and campaigns.' },
+  { name: 'Outreach and partnerships', desc: 'Connecting Muraqabah with mosques, schools, shelters, and community organizations.' },
+  { name: 'Administration and logistics', desc: 'Behind-the-scenes coordination that keeps programs running smoothly.' },
+  { name: 'Fundraising support', desc: 'Helping campaigns reach their goals through community energy and organization.' }
+];
+---
+<Base
+  title="Volunteer | Muraqabah Initiative"
+  description="Volunteer with Muraqabah Initiative. Join the team behind our khidmah campaigns, community programs, media, and events in the Greater Toronto Area and Hamilton."
+>
+  <PageHero
+    eyebrow="Volunteer"
+    title="Serve alongside us"
+    lede="Every meal delivered, every event hosted, and every campaign completed is carried by volunteers. Khidmah, sincere service, is one of Muraqabah's three pillars, and there is a place for you in it."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Where You Can Help</p>
+        <h2>Volunteer areas</h2>
+      </div>
+      <div class="grid cols-3">
+        {areas.map((a) => (
+          <article class="card" data-reveal>
+            <div class="card__body">
+              <h3 style="font-size: 1.15rem;">{a.name}</h3>
+              <p>{a.desc}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container container--narrow">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Get Involved</p>
+        <h2>Volunteer interest form</h2>
+        <p class="muted">Tell us a little about yourself and how you would like to contribute. We will reach out when the next opportunity matches your interests.</p>
+      </div>
+      <div data-reveal>
+        <FormShell endpoint={forms.volunteer} name="Volunteer Interest" submitLabel="Submit Interest" eventName="Volunteer Form Submit">
+          <div class="grid cols-2">
+            <Field label="Full name" name="name" required autocomplete="name" />
+            <Field label="Email" name="email" type="email" required autocomplete="email" />
+            <Field label="Phone (optional)" name="phone" type="tel" autocomplete="tel" />
+            <Field label="City" name="city" required autocomplete="address-level2" />
+          </div>
+          <Field
+            label="Areas of interest"
+            name="areas"
+            type="select"
+            required
+            options={areas.map((a) => a.name).concat('Wherever I am needed most')}
+          />
+          <Field label="Availability" name="availability" type="select" options={['Weekends', 'Weekday evenings', 'Flexible', 'Campaign seasons only (Ramadan, Qurbani)']} />
+          <Field label="Tell us about yourself" name="message" type="textarea" hint="Relevant experience, skills, or anything else you would like us to know." />
+        </FormShell>
+      </div>
+    </div>
+  </section>
+
+  <DonateBand />
+</Base>

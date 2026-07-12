@@ -1,0 +1,12 @@
+---
+interface Props { stats: { value: string; label: string }[]; animate?: boolean }
+const { stats, animate = true } = Astro.props;
+---
+<div class="stats">
+  {stats.map((s) => (
+    <div class="stat" data-reveal>
+      <div class="stat__num" data-count={animate ? s.value : undefined}>{s.value}</div>
+      <div class="stat__label">{s.label}</div>
+    </div>
+  ))}
+</div>

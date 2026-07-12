@@ -1,0 +1,28 @@
+---
+interface Props {
+  label: string;
+  name: string;
+  type?: string;           // text | email | tel | textarea | select
+  required?: boolean;
+  options?: string[];      // for select
+  hint?: string;
+  autocomplete?: string;
+}
+const { label, name, type = 'text', required = false, options = [], hint, autocomplete } = Astro.props;
+const id = `f-${name}`;
+---
+<div class="field">
+  <label for={id}>{label} {required && <span class="req" aria-hidden="true">*</span>}</label>
+  {type === 'textarea' ? (
+    <textarea id={id} name={name} required={required} aria-required={required}></textarea>
+  ) : type === 'select' ? (
+    <select id={id} name={name} required={required} aria-required={required}>
+      <option value="">Please select</option>
+      {options.map((o) => <option value={o}>{o}</option>)}
+    </select>
+  ) : (
+    <input id={id} name={name} type={type} required={required} aria-required={required} autocomplete={autocomplete} />
+  )}
+  {hint && <p class="hint">{hint}</p>}
+  <p class="error">Please provide {label.toLowerCase()}.</p>
+</div>

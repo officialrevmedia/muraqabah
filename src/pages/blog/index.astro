@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import SignupBand from '../../components/SignupBand.astro';
+import { getCollection } from 'astro:content';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Blog', href: '/blog/' }
+];
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const fmt = (d: Date) => d.toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<Base
+  title="Blog | Muraqabah Initiative"
+  description="Articles and reflections from Muraqabah Initiative on sacred knowledge, hadith sciences, spirituality, and community impact."
+>
+  <PageHero
+    eyebrow="Blog"
+    title="Articles and reflections"
+    lede="Reading that carries the classroom into the week. Subscribe by RSS or follow our channels to know when something new is published."
+    crumbs={crumbs}
+  >
+    <p style="margin-top: 0.5rem;"><a href="/rss.xml">Subscribe via RSS</a></p>
+  </PageHero>
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="grid cols-3">
+        {articles.map((a) => (
+          <article class="card" data-reveal>
+            <a class="card__media" href={`/blog/${a.id}/`}>
+              <img src={a.data.heroImage} alt={a.data.heroAlt} loading="lazy" decoding="async" width="640" height="420" />
+            </a>
+            <div class="card__body">
+              <p class="meta">{a.data.category} &middot; {fmt(a.data.pubDate)} &middot; {a.data.readingTime}</p>
+              <h2 style="font-size: 1.25rem;"><a href={`/blog/${a.id}/`}>{a.data.title}</a></h2>
+              <p>{a.data.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <SignupBand />
+</Base>

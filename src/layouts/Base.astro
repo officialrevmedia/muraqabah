@@ -1,0 +1,157 @@
+---
+import '@fontsource/cormorant-garamond/600.css';
+import '@fontsource/cormorant-garamond/700.css';
+import '@fontsource/cormorant-garamond/600-italic.css';
+import '@fontsource-variable/manrope';
+import '@fontsource/amiri';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site, announcement, analytics } from '../config/site';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  schema?: object[];
+  noindex?: boolean;
+}
+
+const { title, description, ogImage = site.ogImage, schema = [], noindex = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+const ogImageAbs = new URL(ogImage, site.url).href;
+---
+
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#FBF3E2" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name} · Research & Reflections`} href="/rss.xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={site.locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageAbs} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbs} />
+
+    {schema.map((obj) => <script type="application/ld+json" set:html={JSON.stringify(obj)} />)}
+
+    {analytics.plausibleDomain && (
+      <script is:inline defer data-domain={analytics.plausibleDomain} src="https://plausible.io/js/script.js"></script>
+    )}
+    {analytics.ga4 && (
+      <Fragment>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${analytics.ga4}`}></script>
+        <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${analytics.ga4}');`}></script>
+      </Fragment>
+    )}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {announcement.enabled && (
+      <div class="announce" role="region" aria-label="Announcement">
+        <div class="container">
+          <span>{announcement.text}</span>
+          <a href={announcement.href}>{announcement.cta}</a>
+        </div>
+      </div>
+    )}
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Header elevation on scroll
+      const header = document.querySelector('.site-header');
+      const setScrolled = () => header?.classList.toggle('is-scrolled', window.scrollY > 12);
+      setScrolled();
+      window.addEventListener('scroll', setScrolled, { passive: true });
+
+      // Mobile navigation drawer
+      const toggle = document.querySelector('[data-nav-open]');
+      const drawer = document.getElementById('mobile-nav');
+      const closeBtn = document.querySelector('[data-nav-close]');
+      const openNav = (open: boolean) => {
+        drawer?.classList.toggle('is-open', open);
+        toggle?.setAttribute('aria-expanded', String(open));
+        document.body.style.overflow = open ? 'hidden' : '';
+        if (open) (drawer?.querySelector('a, button') as HTMLElement | null)?.focus();
+        else (toggle as HTMLElement | null)?.focus();
+      };
+      toggle?.addEventListener('click', () => openNav(true));
+      closeBtn?.addEventListener('click', () => openNav(false));
+      drawer?.addEventListener('keydown', (e) => { if ((e as KeyboardEvent).key === 'Escape') openNav(false); });
+      drawer?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => openNav(false)));
+
+      // Scroll reveal (respects prefers-reduced-motion via CSS)
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealed = document.querySelectorAll('[data-reveal]');
+      if (reduced || !('IntersectionObserver' in window)) {
+        revealed.forEach((el) => el.classList.add('is-in'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }),
+          { rootMargin: '0px 0px -8% 0px', threshold: 0.1 }
+        );
+        revealed.forEach((el) => io.observe(el));
+      }
+
+      // Stat counters
+      const counters = document.querySelectorAll('[data-count]');
+      if (!reduced && 'IntersectionObserver' in window && counters.length) {
+        const co = new IntersectionObserver((entries) => {
+          entries.forEach((en) => {
+            if (!en.isIntersecting) return;
+            const el = en.target as HTMLElement;
+            co.unobserve(el);
+            const raw = el.dataset.count || '';
+            const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
+            if (!isFinite(num)) return;
+            const prefix = raw.match(/^[^0-9]*/)?.[0] || '';
+            const suffix = raw.match(/[^0-9.,]*$/)?.[0] || '';
+            const dur = 1100; const t0 = performance.now();
+            const step = (t: number) => {
+              const p = Math.min(1, (t - t0) / dur);
+              const eased = 1 - Math.pow(1 - p, 3);
+              el.textContent = prefix + Math.round(num * eased).toLocaleString('en-CA') + suffix;
+              if (p < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+          });
+        }, { threshold: 0.4 });
+        counters.forEach((el) => co.observe(el));
+      }
+
+      // Optional analytics events (Plausible custom events)
+      document.querySelectorAll('[data-event]').forEach((el) => {
+        el.addEventListener('click', () => {
+          const w = window as any;
+          if (typeof w.plausible === 'function') w.plausible((el as HTMLElement).dataset.event);
+          if (typeof w.gtag === 'function') w.gtag('event', (el as HTMLElement).dataset.event);
+        });
+      });
+    </script>
+  </body>
+</html>

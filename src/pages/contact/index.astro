@@ -1,0 +1,97 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FormShell from '../../components/FormShell.astro';
+import Field from '../../components/Field.astro';
+import { forms, site } from '../../config/site';
+import { social, whatsapp } from '../../data/social';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Contact', href: '/contact/' }
+];
+
+const topics = [
+  'General question',
+  'Programs and courses',
+  'Gardens of Paradise interest',
+  'Rihla 2027 interest',
+  'Volunteering',
+  'Partnership',
+  'Donations and sponsorship',
+  'Media inquiry',
+  'Correction or feedback'
+];
+---
+<Base
+  title="Contact | Muraqabah Initiative"
+  description="Contact Muraqabah Initiative. Reach us by email, through our contact form, or on WhatsApp and social media. We serve the Greater Toronto Area, Hamilton, and students online."
+>
+  <PageHero
+    eyebrow="Contact"
+    title="We would love to hear from you"
+    lede="Questions about a course, an idea for a partnership, or simply a salaam. Write to us and we will respond as soon as we can."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--tight">
+    <div class="container grid cols-2" style="align-items: start; gap: 3rem;">
+      <div data-reveal>
+        <h2 style="font-size: 1.5rem;">Send a message</h2>
+        <FormShell endpoint={forms.contact} name="Contact" submitLabel="Send Message" eventName="Contact Form Submit">
+          <div class="grid cols-2">
+            <Field label="Your name" name="name" required autocomplete="name" />
+            <Field label="Email" name="email" type="email" required autocomplete="email" />
+          </div>
+          <Field label="Topic" name="subject" type="select" required options={topics} />
+          <Field label="Your message" name="message" type="textarea" required />
+        </FormShell>
+      </div>
+
+      <div data-reveal>
+        <h2 style="font-size: 1.5rem;">Other ways to reach us</h2>
+        <div class="card" style="margin-top: 1rem;">
+          <div class="card__body">
+            <p class="meta">Email</p>
+            <p style="margin: 0 0 1.25rem;"><a href={`mailto:${site.email}`}>{site.email}</a></p>
+            <p class="meta">WhatsApp Community</p>
+            <p style="margin: 0 0 1.25rem;"><a href={whatsapp} rel="noopener">Join our WhatsApp group</a> for announcements and reminders.</p>
+            <p class="meta">Social Media</p>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              {social.map((s) => (
+                <li style="padding: 0.3rem 0;"><a href={s.href} rel="noopener">{s.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div class="notice" style="margin-top: 1.5rem;">
+          <p style="margin: 0;">
+            Based in the Greater Toronto Area and Hamilton, serving students locally and online.
+            For program-specific questions, each course page also lists its own details.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Support ?subject= prefill, e.g. /contact/?subject=gardens-of-paradise
+  const map: Record<string, string> = {
+    'gardens-of-paradise': 'Gardens of Paradise interest',
+    'rihla-2027': 'Rihla 2027 interest',
+    'volunteer': 'Volunteering',
+    'partnership': 'Partnership',
+    'donations': 'Donations and sponsorship',
+    'media': 'Media inquiry'
+  };
+  const param = new URLSearchParams(location.search).get('subject');
+  if (param) {
+    const select = document.querySelector<HTMLSelectElement>('select[name="subject"]');
+    const value = map[param] ?? param;
+    if (select) {
+      const match = Array.from(select.options).find((o) => o.value.toLowerCase() === value.toLowerCase());
+      if (match) select.value = match.value;
+    }
+  }
+</script>

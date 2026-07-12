@@ -1,0 +1,25 @@
+---
+import { links, pricing } from '../config/site';
+import type { Program } from '../data/programs';
+interface Props { program: Program }
+const { program: p } = Astro.props;
+const badgeClass = p.status === 'enrolling' ? 'badge--live' : p.status === 'coming-soon' ? 'badge--soon' : 'badge--done';
+const ctaHref = p.cta.href === 'ZEFFY_CHAINS' ? links.chainsOfTrust : p.cta.href;
+---
+<article class="card" data-reveal>
+  <a class="card__media" href={`/programs/${p.slug}/`} tabindex="-1" aria-hidden="true">
+    <img src={p.image} alt={p.imageAlt} width="640" height="427" loading="lazy" />
+  </a>
+  <div class="card__body">
+    <span class={`badge ${badgeClass}`}>{p.statusLabel}</span>
+    <h3><a href={`/programs/${p.slug}/`} style="color:inherit; text-decoration:none;">{p.title}</a></h3>
+    <p class="meta">{p.subtitle} &middot; {p.teacher}</p>
+    <p>{p.summary}</p>
+    {p.slug === 'chains-of-trust' && (
+      <p class="meta">{p.schedule} &middot; {pricing.chainsOfTrust.amount} {pricing.chainsOfTrust.period}</p>
+    )}
+    <a class="text-link" href={ctaHref} {...(p.cta.external ? { rel: 'noopener', 'data-event': `${p.title} Register Click` } : {})}>
+      {p.cta.label}{p.cta.external && <span class="visually-hidden"> (opens a secure Zeffy page)</span>} &rarr;
+    </a>
+  </div>
+</article>

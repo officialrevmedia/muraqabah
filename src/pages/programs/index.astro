@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import ProgramCard from '../../components/ProgramCard.astro';
+import DonateBand from '../../components/DonateBand.astro';
+import { programs, pastPrograms } from '../../data/programs';
+---
+<Base
+  title="Programs | Muraqabah Initiative"
+  description="Explore Muraqabah Initiative programs: Chains of Trust (enrolling now), the upcoming Gardens of Paradise study circle, and the completed Spheres of Faith flagship program, taught by traditionally trained scholars."
+>
+  <PageHero
+    eyebrow="Programs"
+    title="Structured learning in the Islamic sciences"
+    lede="Text-based study from primary classical sources, live weekly classes, and one-day intensives, taught by scholars trained within an unbroken chain of transmission."
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'Programs', href: '/programs/' }]}
+  />
+  <section class="section--tight">
+    <div class="container grid cols-3">
+      {programs.map((p) => <ProgramCard program={p} />)}
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Year One</p>
+        <h2>Programs we have already delivered</h2>
+        <p class="lede">A snapshot of Muraqabah's first year of teaching. For the full story, visit our <a href="/events/">events and history page</a>.</p>
+      </div>
+      <div class="grid cols-3">
+        {pastPrograms.map((p) => (
+          <div class="card" data-reveal style="padding: 1.7rem;">
+            <p class="meta" style="color: var(--rust);">{p.when}</p>
+            <h3 style="font-size: 1.3rem; margin: 0.3rem 0 0.5rem;">{p.title}</h3>
+            <p class="muted" style="margin: 0;">{p.summary}</p>
+            <p class="meta" style="margin-top: 0.9rem;">{p.teacher}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <DonateBand />
+</Base>

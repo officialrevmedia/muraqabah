@@ -1,0 +1,31 @@
+---
+/**
+ * Privacy-friendly video facade. Only a thumbnail loads with the page.
+ * The YouTube player (youtube-nocookie.com) is created after the visitor
+ * presses play, protecting performance and privacy.
+ */
+interface Props { id: string; title: string }
+const { id, title } = Astro.props;
+---
+<div class="video-facade" data-video={id} data-title={title}>
+  <img src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`} alt="" width="480" height="360" loading="lazy" />
+  <button class="play" type="button" aria-label={`Play video: ${title}`} data-event="Video Play">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5-13-7.5z"/></svg>
+  </button>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.video-facade').forEach((box) => {
+    box.querySelector('.play')?.addEventListener('click', () => {
+      const id = box.dataset.video;
+      const title = box.dataset.title || 'Video';
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = title;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      box.replaceChildren(iframe);
+      iframe.focus();
+    });
+  });
+</script>

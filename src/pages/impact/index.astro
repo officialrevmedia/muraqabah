@@ -1,0 +1,88 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import StatGrid from '../../components/StatGrid.astro';
+import DonateBand from '../../components/DonateBand.astro';
+import { yearOneStats } from '../../config/site';
+import { ramadan2026, qurbani2026 } from '../../data/campaigns';
+---
+<Base
+  title="Our Impact | Muraqabah Initiative"
+  description="Muraqabah Initiative's first-year impact: more than 600 students reached, over 10,000 people fed through khidmah campaigns at home and in Tarim, Yemen, and khidmah rooted in the Prophetic tradition."
+>
+  <PageHero
+    eyebrow="Impact"
+    title="Knowledge in action"
+    lede="We believe knowledge must be accompanied by action. Here is what that looked like in our first year, at home in Canada and overseas in Tarim, Yemen."
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'Impact', href: '/impact/' }]}
+  />
+
+  <section class="section--tight">
+    <div class="container">
+      <StatGrid stats={yearOneStats} />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split">
+      <div class="frame" data-reveal>
+        <img src="/images/photos/khidmah-grocery-bags.webp" alt="Family food packages lined up and ready for distribution" width="760" height="570" loading="lazy" style="aspect-ratio: 4/3;" />
+      </div>
+      <div data-reveal>
+        <span class="badge badge--done">Ramadan 2026 &middot; Completed</span>
+        <h2 style="margin-top: 1rem;">{ramadan2026.title}</h2>
+        <p class="lede">{ramadan2026.headline}</p>
+        <p class="muted">{ramadan2026.summary}</p>
+        <a class="btn btn-outline" href="/campaigns/ramadan-2026/">Read the Full Impact Report</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container split split--rev">
+      <div class="frame" data-reveal style="order: 2;">
+        <img src="/images/photos/khidmah-distribution-night.webp" alt="A night-time distribution of provisions in Tarim, Yemen" width="760" height="570" loading="lazy" style="aspect-ratio: 4/3;" />
+      </div>
+      <div data-reveal>
+        <span class="badge badge--done">Eid al-Adha 2026 &middot; Completed</span>
+        <h2 style="margin-top: 1rem;">{qurbani2026.title}</h2>
+        <p class="lede muted">{qurbani2026.headline}</p>
+        <p class="muted">{qurbani2026.summary}</p>
+        <a class="btn btn-outline-cream" href="/campaigns/qurbani-2026/">See the Distribution</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Partners</p>
+        <h2>Delivered together</h2>
+        <p class="lede">Our Ramadan campaign alone was carried out with nine partner organizations across the Greater Toronto Area and Hamilton.</p>
+      </div>
+      <div class="grid cols-3">
+        {ramadan2026.partners.map((p) => (
+          <div class="card" data-reveal style="padding: 1.5rem;">
+            <h3 style="font-size: 1.15rem; margin: 0 0 0.2rem;">{p.name}</h3>
+            <p class="meta" style="color: var(--rust);">{p.place}</p>
+            <p class="muted" style="margin: 0.4rem 0 0; font-size: 0.92rem;">{p.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight center">
+    <div class="container container--narrow" data-reveal>
+      <p class="eyebrow" style="justify-content: center;">History</p>
+      <h2>Every program and campaign, in order</h2>
+      <p class="lede" style="margin-inline: auto;">See the full timeline of what Muraqabah has delivered and what is coming next.</p>
+      <div class="btn-row" style="justify-content: center; margin-top: 1.2rem;">
+        <a class="btn btn-outline" href="/events/">View the Timeline</a>
+        <a class="btn btn-outline" href="/campaigns/">All Campaigns</a>
+      </div>
+    </div>
+  </section>
+
+  <DonateBand />
+</Base>

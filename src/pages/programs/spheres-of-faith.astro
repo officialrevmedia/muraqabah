@@ -1,0 +1,90 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import DonateBand from '../../components/DonateBand.astro';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Programs', href: '/programs/' },
+  { name: 'Spheres of Faith', href: '/programs/spheres-of-faith/' }
+];
+const spheres = [
+  { name: 'Islam', ar: '\u0627\u0644\u0625\u0633\u0644\u0627\u0645', d: 'The outward submission: the practices and obligations that form the foundation of a life of worship.' },
+  { name: 'Iman', ar: '\u0627\u0644\u0625\u064A\u0645\u0627\u0646', d: 'Faith and its realities: what the heart affirms and how conviction takes root.' },
+  { name: 'Ihsan', ar: '\u0627\u0644\u0625\u062D\u0633\u0627\u0646', d: 'Excellence in worship: to worship Allah as though you see Him, knowing that He sees you.' },
+  { name: 'Irfan', ar: '\u0627\u0644\u0639\u0631\u0641\u0627\u0646', d: 'Deep knowing: the realms of connection to Allah and drawing near to Him.' }
+];
+---
+<Base
+  title="Spheres of Faith: Islam, Iman, Ihsan, and Irfan | Muraqabah Initiative"
+  description="Muraqabah Initiative's completed flagship program. Guided weekly readings on the spheres of the Islamic tradition through the framework of Habib Abd al-Rahman Balfaqih, taught by Shaykh Zakaria Abdilaziz from Tarim."
+  ogImage="/images/posters/spheres-of-faith-poster.webp"
+>
+  <div class="page-hero" style="padding-bottom: 0;">
+    <div class="container"><Breadcrumbs items={crumbs} /></div>
+  </div>
+
+  <section class="section--tight">
+    <div class="container split">
+      <div data-reveal>
+        <span class="badge badge--done">Completed Flagship Program</span>
+        <h1 style="margin-top: 1rem;">Spheres of Faith</h1>
+        <p class="lede">Islam, Iman, Ihsan, and Irfan: Muraqabah's first flagship weekly program, taught live on Zoom by Shaykh Zakaria Abdilaziz from Tarim, Yemen, with more than 80 students attending every week for months.</p>
+        <p>The program offered guided readings on the spheres of the Islamic tradition through the framework of Habib Abd al-Rahman Balfaqih, one of the foremost inheritors of the Ba Alawi tradition in Hadramawt, Yemen.</p>
+        <div class="btn-row" style="margin-top: 1.4rem;">
+          <a class="btn btn-primary" href="/programs/">See Current Programs</a>
+          <a class="btn btn-outline" href="/scholars/shaykh-zakaria-abdilaziz/">Meet the Teacher</a>
+        </div>
+      </div>
+      <div class="arch arch--framed" data-reveal>
+        <img src="/images/photos/prayer-hall.webp" alt="Students seated in a prayer hall during a class" width="720" height="900" loading="lazy" style="aspect-ratio: 4/5;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">The Framework</p>
+        <h2>Four spheres of the tradition</h2>
+      </div>
+      <div class="grid cols-4">
+        {spheres.map((s) => (
+          <div class="card" data-reveal style="padding: 1.6rem;">
+            <span class="arabic" lang="ar" style="font-size: 1.8rem; color: var(--rust); display:block; margin-bottom: 0.4rem;">{s.ar}</span>
+            <h3 style="font-size: 1.3rem; margin: 0 0 0.4rem;">{s.name}</h3>
+            <p class="muted" style="margin: 0; font-size: 0.95rem;">{s.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container container--mid center">
+      <div data-reveal>
+        <p class="eyebrow" style="justify-content: center;">On the Source Text</p>
+        <blockquote style="font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.1rem); font-style: italic; line-height: 1.4; color: var(--cream);">
+          One of the most beneficial, comprehensive and lofty books which clarify the path to Allah and explain the realms of connection to Him and drawing close to Him.
+        </blockquote>
+        <p class="muted" style="margin-top: 1.2rem;">Habib Umar bin Hafiz, on The Spheres of Faith by Habib Abd al-Rahman Balfaqih</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand section--tight">
+    <div class="container container--narrow center">
+      <div data-reveal>
+        <p class="eyebrow" style="justify-content: center;">Continue the Journey</p>
+        <h2>New programs are always forming</h2>
+        <p class="lede" style="margin-inline: auto;">Spheres of Faith has completed, but the work continues. Explore what is enrolling now, or register your interest in what is coming next.</p>
+        <div class="btn-row" style="justify-content: center; margin-top: 1.4rem;">
+          <a class="btn btn-primary" href="/programs/chains-of-trust/">Chains of Trust: Enrolling Now</a>
+          <a class="btn btn-outline" href="/programs/gardens-of-paradise/">Gardens of Paradise: Coming Soon</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <DonateBand />
+</Base>

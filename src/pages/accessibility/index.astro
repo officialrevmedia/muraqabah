@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site } from '../../config/site';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Accessibility', href: '/accessibility/' }
+];
+---
+<Base
+  title="Accessibility | Muraqabah Initiative"
+  description="Muraqabah Initiative's commitment to an accessible website, the standards we build toward, and how to reach us if you encounter a barrier."
+>
+  <PageHero eyebrow="Accessibility" title="Accessibility statement" lede="Knowledge should be within everyone's reach. We build this website to be usable by as many people as possible, whatever tools they browse with." crumbs={crumbs} />
+
+  <section class="section section--tight">
+    <div class="container container--narrow prose">
+      <h2>Our commitment</h2>
+      <p>
+        Muraqabah Initiative aims to meet the Web Content Accessibility Guidelines (WCAG) 2.1 at Level AA across
+        this website, and to keep improving as the site grows.
+      </p>
+
+      <h2>What we have built in</h2>
+      <ul>
+        <li>Semantic HTML with a logical heading structure on every page</li>
+        <li>A visible skip link and consistent keyboard navigation, including the mobile menu, accordions, and the gallery lightbox</li>
+        <li>Text alternatives for meaningful images and decorative images marked accordingly</li>
+        <li>Colour combinations chosen for readable contrast against our palette</li>
+        <li>Form fields with proper labels, clear error messages, and status announcements for assistive technology</li>
+        <li>Reduced-motion support: animations and counters are disabled when your system requests less motion</li>
+        <li>Videos embedded with a click-to-play facade so nothing loads or moves without your action</li>
+      </ul>
+
+      <h2>Known limitations</h2>
+      <p>
+        Some archival materials, such as event posters and PDF reports produced for print, may not be fully
+        accessible. If you need the information they contain in another format, contact us and we will provide it.
+      </p>
+
+      <h2>Third-party content</h2>
+      <p>
+        Donation and registration pages are hosted by Zeffy, and videos are hosted by YouTube. We choose partners
+        with accessibility in mind, but their platforms are outside our direct control.
+      </p>
+
+      <h2>Tell us about a barrier</h2>
+      <p>
+        If any part of this website is difficult for you to use, we genuinely want to know. Email
+        <a href={`mailto:${site.email}`}> {site.email}</a> with the page address and a short description of the
+        problem, and we will work to fix it.
+      </p>
+    </div>
+  </section>
+</Base>

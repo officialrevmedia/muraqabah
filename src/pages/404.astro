@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base
+  title="Page Not Found | Muraqabah Initiative"
+  description="The page you were looking for could not be found."
+  noindex
+>
+  <section class="section">
+    <div class="container container--narrow center">
+      <p class="eyebrow" data-reveal>404</p>
+      <h1 data-reveal>This page could not be found</h1>
+      <p class="lede" style="margin-inline: auto;" data-reveal>
+        The page may have moved as part of our website redesign. The links below should get you back on the path.
+      </p>
+      <div class="btn-row" style="justify-content: center; margin-top: 2rem;" data-reveal>
+        <a class="btn btn-primary" href="/">Return Home</a>
+        <a class="btn btn-outline" href="/programs/">Browse Programs</a>
+        <a class="btn btn-outline" href="/contact/">Contact Us</a>
+      </div>
+      <div style="margin-top: 3rem;" data-reveal>
+        <img
+          class="arch"
+          src="/images/photos/manuscript-open.webp"
+          alt=""
+          width="640"
+          height="480"
+          style="max-width: 22rem; margin-inline: auto; display: block;"
+        />
+      </div>
+    </div>
+  </section>
+</Base>

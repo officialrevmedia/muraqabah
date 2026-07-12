@@ -1,0 +1,86 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import FormShell from '../../components/FormShell.astro';
+import Field from '../../components/Field.astro';
+import { forms } from '../../config/site';
+import { ramadan2026 } from '../../data/campaigns';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Partner With Us', href: '/partner-with-us/' }
+];
+
+const ways = [
+  { name: 'Community organizations', desc: 'Mosques, shelters, food banks, and social services collaborating on khidmah campaigns and distributions.' },
+  { name: 'Venues and institutions', desc: 'Schools, colleges, and community centres hosting intensives, weekly programs, and special events.' },
+  { name: 'Sponsors', desc: 'Businesses and families sponsoring programs, campaigns, and educational resources.' },
+  { name: 'Educators and institutes', desc: 'Teachers and institutions collaborating on courses, curricula, and student pathways.' }
+];
+---
+<Base
+  title="Partner With Us | Muraqabah Initiative"
+  description="Partner with Muraqabah Initiative. We collaborate with mosques, shelters, schools, sponsors, and community organizations across the Greater Toronto Area and Hamilton."
+>
+  <PageHero
+    eyebrow="Partner With Us"
+    title="Better together"
+    lede="Muraqabah's first year of impact was built on partnership. Nine organizations worked with us during Ramadan 2026 alone, and every program we run depends on people and institutions who share the vision."
+    crumbs={crumbs}
+  />
+
+  <section class="section section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Ways to Partner</p>
+        <h2>How organizations work with us</h2>
+      </div>
+      <div class="grid cols-2">
+        {ways.map((w) => (
+          <article class="card" data-reveal>
+            <div class="card__body">
+              <h3 style="font-size: 1.2rem;">{w.name}</h3>
+              <p>{w.desc}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Trusted Collaborations</p>
+        <h2>Partners from Ramadan 2026</h2>
+        <p class="muted">These organizations worked with Muraqabah during our Feed 1,000 People campaign.</p>
+      </div>
+      <ul class="partner-list" data-reveal style="columns: 2; column-gap: 3rem; list-style: none; padding: 0; max-width: 52rem;">
+        {ramadan2026.partners.map((p) => (
+          <li style="padding: 0.45rem 0; border-bottom: 1px solid var(--line-dark);">{p}</li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container container--narrow">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Start a Conversation</p>
+        <h2>Partnership inquiry</h2>
+      </div>
+      <div data-reveal>
+        <FormShell endpoint={forms.partnership} name="Partnership Inquiry" submitLabel="Send Inquiry" eventName="Partnership Form Submit">
+          <div class="grid cols-2">
+            <Field label="Your name" name="name" required autocomplete="name" />
+            <Field label="Email" name="email" type="email" required autocomplete="email" />
+            <Field label="Organization" name="organization" required autocomplete="organization" />
+            <Field label="Phone (optional)" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <Field label="Type of partnership" name="type" type="select" required options={ways.map((w) => w.name).concat('Something else')} />
+          <Field label="How would you like to work together?" name="message" type="textarea" required />
+        </FormShell>
+      </div>
+    </div>
+  </section>
+</Base>

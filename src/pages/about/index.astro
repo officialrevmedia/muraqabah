@@ -1,0 +1,122 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import DonateBand from '../../components/DonateBand.astro';
+import { organizationSchema } from '../../lib/schema';
+---
+<Base
+  title="About Muraqabah Initiative | Sacred Knowledge, Character, and Service"
+  description="Muraqabah Initiative is a GTA-based Islamic educational initiative dedicated to sacred knowledge, refined character, and sincere community service, taught through authentic scholarly transmission."
+  schema={[organizationSchema()]}
+>
+  <PageHero
+    eyebrow="Who We Are"
+    title="A community that lives with muraqabah"
+    lede="Our vision is to build a community that lives with muraqabah. This constant awareness shapes how we worship, how we act, and how we care for others."
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'About', href: '/about/' }]}
+  />
+
+  <section class="section--tight">
+    <div class="container split">
+      <div class="prose" data-reveal>
+        <p class="lede">
+          Muraqabah Initiative exists to make that awareness practical: a society dedicated to sacred knowledge,
+          refined character, and sincere community service.
+        </p>
+        <p>
+          Canada's Muslim community is the fastest-growing religious demographic in the country: young, educated,
+          and searching. In the absence of qualified scholarship, that vacuum is filled by unqualified voices.
+          Muraqabah exists to be the alternative.
+        </p>
+        <p>
+          We are an educational initiative dedicated to reviving traditional Islamic knowledge and nurturing people
+          who live their faith with intention, awareness, and purpose. At our core, we seek to reconnect people to a
+          way of life where knowledge is not only learned, but embodied, and where spiritual growth is grounded in
+          sincerity and consistency.
+        </p>
+        <p>
+          We are based in the Greater Toronto Area and teach online globally, with a long-term goal of developing
+          future leaders and teachers and building a community rooted in meaningful learning.
+        </p>
+      </div>
+      <div class="arch arch--framed" data-reveal>
+        <img src="/images/photos/event-audience-2.webp" alt="A full room of attendees at a Muraqabah intensive" width="760" height="950" loading="lazy" style="aspect-ratio: 4/5;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">What We Stand On</p>
+        <h2>Four commitments</h2>
+      </div>
+      <div class="grid cols-2">
+        <div class="card" data-reveal style="padding: 1.8rem;">
+          <h3>Authentic transmission</h3>
+          <p class="muted" style="margin:0;">Unbroken scholarly chains reaching back to the Prophet <span lang="ar">&#65018;</span>, carried by teachers trained in the classical tradition.</p>
+        </div>
+        <div class="card" data-reveal style="padding: 1.8rem;">
+          <h3>Structured learning</h3>
+          <p class="muted" style="margin:0;">Classical texts, taught by qualified teachers, through live classes, guided readings, and serious study rather than isolated content.</p>
+        </div>
+        <div class="card" data-reveal style="padding: 1.8rem;">
+          <h3>Character first</h3>
+          <p class="muted" style="margin:0;">Knowledge designed to transform the self, the home, and the community, with etiquette and sincerity at the centre of every gathering.</p>
+        </div>
+        <div class="card" data-reveal style="padding: 1.8rem;">
+          <h3>Service as expression</h3>
+          <p class="muted" style="margin:0;">Khidmah flowing naturally from what we teach: food relief, financial assistance, and support for people at home and overseas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split split--rev">
+      <div class="frame" data-reveal style="order: 2;">
+        <img src="/images/photos/event-speaker.webp" alt="Teaching at a Muraqabah community program" width="760" height="507" loading="lazy" style="aspect-ratio: 3/2;" />
+      </div>
+      <div class="prose" data-reveal>
+        <p class="eyebrow">The Standard</p>
+        <h2>Sacred knowledge deserves a sacred standard</h2>
+        <p>
+          We are not a cookie-cutter platform. Every course, campaign, and publication is crafted to a professional
+          standard: carefully produced video and photography, designed course materials and impact reports, and an
+          experience that honours the tradition it carries, from first touchpoint to final certificate.
+        </p>
+        <p>
+          Alongside structured programs, Muraqabah maintains a constant stream of free, beneficial knowledge, open to
+          anyone, anywhere: khutbahs and community talks across the GTA, full lessons published freely on YouTube, and
+          daily reminders across our platforms. No paywall stands between a seeker and sound scholarship.
+        </p>
+        <p><a class="text-link" href="/scholars/">Meet the scholars behind the work &rarr;</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand section--tight">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Founded By</p>
+        <h2>Leadership</h2>
+      </div>
+      <div class="grid cols-3">
+        <div data-reveal>
+          <h3 style="font-size: 1.35rem;">Shaykh Zakaria Abdilaziz</h3>
+          <p class="muted">Lead Scholar and Teacher, head of Muraqabah's academic vision. <a href="/scholars/shaykh-zakaria-abdilaziz/">Full profile &rarr;</a></p>
+        </div>
+        <div data-reveal>
+          <h3 style="font-size: 1.35rem;">Mirza Veletanlic</h3>
+          <p class="muted">Co-founder.</p>
+        </div>
+        <div data-reveal>
+          <h3 style="font-size: 1.35rem;">Ahmad Mirza</h3>
+          <p class="muted">Co-founder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <DonateBand />
+</Base>

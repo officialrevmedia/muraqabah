@@ -1,0 +1,82 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import { site } from '../../config/site';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Privacy', href: '/privacy/' }
+];
+---
+<Base
+  title="Privacy Policy | Muraqabah Initiative"
+  description="How Muraqabah Initiative collects, uses, and protects your information across our website, forms, and communications."
+>
+  <PageHero eyebrow="Privacy" title="Privacy policy" lede="We ask for as little as possible, use it only for the reason you shared it, and never sell it." crumbs={crumbs} />
+
+  <section class="section section--tight">
+    <div class="container container--narrow prose">
+      <p><em>Last updated: July 2026</em></p>
+
+      <h2>What we collect</h2>
+      <p>
+        You can browse this website without providing any personal information. We collect information only when
+        you choose to share it, for example when you submit a contact, volunteer, partnership, or interest form.
+        Depending on the form, this may include your name, email address, phone number, city, and the message or
+        details you provide.
+      </p>
+
+      <h2>How we use it</h2>
+      <p>
+        We use your information solely to respond to your inquiry, coordinate the activity you expressed interest
+        in, and send you updates you have asked for. We do not sell, rent, or trade personal information.
+      </p>
+
+      <h2>Forms and email</h2>
+      <p>
+        Form submissions are delivered to {site.email} through a form delivery service. Emails you send us are
+        handled through our email provider. Please avoid including sensitive personal information in form
+        submissions.
+      </p>
+
+      <h2>Donations</h2>
+      <p>
+        Donations and program registrations are processed by Zeffy on Zeffy's own platform. Muraqabah does not
+        receive or store your payment card details. Zeffy's handling of your information is governed by Zeffy's
+        own privacy policy, which is available on their website.
+      </p>
+
+      <h2>Third-party content</h2>
+      <p>
+        Some pages embed videos hosted on YouTube. We use YouTube's privacy-enhanced player, which delays
+        connections to YouTube until you choose to play a video. Once you press play, YouTube's own privacy
+        practices apply. Links to our social media profiles take you to platforms governed by their own policies.
+      </p>
+
+      <h2>Analytics and cookies</h2>
+      <p>
+        This website does not set advertising or tracking cookies. If we enable website analytics in the future,
+        we intend to use a privacy-conscious service and will update this policy accordingly.
+      </p>
+
+      <h2>Retention and your choices</h2>
+      <p>
+        We keep correspondence and form submissions only as long as needed to serve the purpose they were sent
+        for. You may ask us at any time to correct or delete information you have shared with us, or to stop
+        contacting you, by emailing <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+
+      <h2>Children</h2>
+      <p>
+        Our website is intended for a general audience. Program registrations for minors should be completed by
+        a parent or guardian.
+      </p>
+
+      <h2>Changes to this policy</h2>
+      <p>
+        If our practices change, we will update this page and revise the date at the top. Questions about this
+        policy can be sent to <a href={`mailto:${site.email}`}>{site.email}</a>.
+      </p>
+    </div>
+  </section>
+</Base>

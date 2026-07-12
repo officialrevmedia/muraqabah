@@ -1,0 +1,142 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Faq from '../../components/Faq.astro';
+import FormShell from '../../components/FormShell.astro';
+import Field from '../../components/Field.astro';
+import { forms } from '../../config/site';
+import { faqSchema } from '../../lib/schema';
+
+const crumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Events & Rihla', href: '/events/' },
+  { name: 'Turkey Rihla 2027', href: '/rihla-2027/' }
+];
+const themes = [
+  'Guided visits to sacred and historic sites, subject to final confirmation',
+  'Structured learning sessions with a Muraqabah scholar',
+  'Suhbah: companionship and spiritual reflection',
+  'Time for worship, du\u02bca, and connection',
+  'Exploration of the living heritage of the city'
+];
+const forWhom = [
+  'Students of Muraqabah programs, past and present',
+  'Families and individuals seeking a journey with purpose',
+  'Anyone drawn to travel that combines learning, worship, and companionship'
+];
+const faqs = [
+  { q: 'When will the Rihla take place?', a: 'The Muraqabah Turkey Rihla is planned for 2027. Exact dates, pricing, and the full itinerary are being developed and will be shared with those who register their interest first.' },
+  { q: 'Where will it take place?', a: 'The journey centres on Istanbul, a city shaped by centuries of scholarship, spirituality, leadership, and civilization. Specific sites and any additional locations will be confirmed closer to the time.' },
+  { q: 'What is included?', a: 'The Rihla is being designed to bring together structured learning, suhbah, guided exploration, and meaningful companionship. A detailed inclusions list will accompany the final itinerary.' },
+  { q: 'How much will it cost?', a: 'Pricing has not yet been set. Registering your interest places you on the first list to receive costs and booking details as soon as they are confirmed, with no obligation.' },
+  { q: 'Does registering my interest commit me to attending?', a: 'No. The interest form simply helps us gauge demand and keep you informed. It is not a booking and carries no obligation or payment.' }
+];
+---
+<Base
+  title="Turkey Rihla 2027 | Muraqabah Initiative"
+  description="Register your interest in the 2027 Muraqabah Turkey Rihla: a guided journey to Istanbul bringing together structured learning, suhbah, exploration, and meaningful companionship."
+  ogImage="/images/photos/istanbul-silhouette.webp"
+  schema={[faqSchema(faqs.map((f) => ({ q: f.q, a: f.a })))]}
+>
+  <div class="page-hero" style="padding-bottom: 0;">
+    <div class="container"><Breadcrumbs items={crumbs} /></div>
+  </div>
+
+  <section class="section--tight">
+    <div class="container split">
+      <div data-reveal>
+        <p class="eyebrow">Turkey Rihla 2027</p>
+        <h1>Journey through sacred history</h1>
+        <p class="lede">Step into Istanbul: a city shaped by centuries of scholarship, spirituality, leadership, and civilization. The 2027 Muraqabah Rihla will bring together structured learning, suhbah, exploration, and meaningful companionship.</p>
+        <div class="btn-row" style="margin-top: 1.4rem;">
+          <a class="btn btn-primary" href="#interest" data-event="Rihla Interest">Register Your Interest</a>
+        </div>
+        <p class="muted" style="font-size: 0.86rem; margin-top: 1rem;">Registering keeps you informed as details are confirmed. It is not a booking and carries no obligation.</p>
+      </div>
+      <div class="arch arch--framed" data-reveal>
+        <img src="/images/photos/istanbul-silhouette.webp" alt="The Istanbul skyline silhouetted against a sunset sky" width="720" height="900" loading="lazy" style="aspect-ratio: 4/5;" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split split--rev">
+      <div class="frame" data-reveal style="order: 2;">
+        <img src="/images/photos/istanbul-mosque.webp" alt="A historic Ottoman mosque in Istanbul" width="760" height="570" loading="lazy" style="aspect-ratio: 4/3;" />
+      </div>
+      <div class="prose" data-reveal>
+        <p class="eyebrow">Why Istanbul</p>
+        <h2>A city that carries the tradition</h2>
+        <p>Few cities hold the layered history of Istanbul: a meeting point of continents, empires, and centuries of Islamic scholarship and civilization. To walk its streets is to move through living history.</p>
+        <p>The Muraqabah Rihla is designed so that history is not merely observed but absorbed: paired with study, reflection, and companionship, so that a journey becomes a means of drawing nearer to Allah.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--sand">
+    <div class="container">
+      <div class="grid cols-2">
+        <div data-reveal>
+          <p class="eyebrow">What to Expect</p>
+          <h2>Learning, suhbah, and exploration</h2>
+          <p class="muted">The following elements are illustrative of what the Rihla is being designed to include. The final program will be confirmed before booking opens.</p>
+          <ul style="padding-left: 1.2rem; display: grid; gap: 0.6rem;">
+            {themes.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div data-reveal>
+          <p class="eyebrow">Who It Is For</p>
+          <h2>Travel with purpose</h2>
+          <ul style="padding-left: 1.2rem; display: grid; gap: 0.6rem;">
+            {forWhom.map((item) => <li>{item}</li>)}
+          </ul>
+          <p class="notice" style="margin-top: 1.5rem;">Dates, itinerary, and pricing are in development. Nothing on this page is a fixed schedule until it is formally announced.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container container--mid">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2>Frequently asked questions</h2>
+      </div>
+      <Faq items={faqs} />
+    </div>
+  </section>
+
+  <section class="section section--dark" id="interest">
+    <div class="container container--mid">
+      <div class="section-head" data-reveal>
+        <p class="eyebrow">Register Interest</p>
+        <h2>Be first to hear when booking opens</h2>
+        <p class="lede muted">Share a few details and we will keep you informed as the 2027 Rihla takes shape. This is not a booking and carries no obligation or payment.</p>
+      </div>
+      <div data-reveal style="background: var(--ivory); color: var(--ink); border-radius: var(--radius); padding: clamp(1.5rem, 4vw, 2.75rem);">
+        <FormShell endpoint={forms.rihla} name="Turkey Rihla 2027 interest" submitLabel="Register My Interest" eventName="Rihla Interest Submit">
+          <div class="row">
+            <Field label="Full name" name="name" required autocomplete="name" />
+            <Field label="Email address" name="email" type="email" required autocomplete="email" />
+          </div>
+          <div class="row">
+            <Field label="Phone number" name="phone" type="tel" autocomplete="tel" />
+            <Field label="City and country" name="city" autocomplete="address-level2" />
+          </div>
+          <div class="row">
+            <Field label="Number of travellers" name="travellers" type="select" options={['Just me', '2', '3', '4', '5 or more']} />
+            <Field label="Age range" name="age_range" type="select" options={['Under 18', '18 to 25', '26 to 35', '36 to 50', 'Over 50']} />
+          </div>
+          <div class="row">
+            <Field label="Room preference" name="room" type="select" options={['Single', 'Double', 'Family', 'No preference yet']} />
+            <Field label="Previous travel or Rihla experience" name="experience" type="select" options={['First time', 'Some experience', 'Experienced traveller']} />
+          </div>
+          <Field label="Passport held (country of issue)" name="passport" hint="Helps us anticipate visa guidance. Do not include your passport number." />
+          <Field label="Dietary requirements" name="dietary" type="textarea" hint="Optional. Let us know of any dietary needs." />
+          <Field label="Accessibility needs" name="accessibility" type="textarea" hint="Optional. Tell us how we can make the journey accessible for you." />
+          <Field label="Questions or anything else" name="questions" type="textarea" />
+        </FormShell>
+      </div>
+    </div>
+  </section>
+</Base>

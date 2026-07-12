@@ -1,0 +1,75 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import VideoEmbed from '../../components/VideoEmbed.astro';
+import { featuredVideo } from '../../data/videos';
+import { socialPosts } from '../../data/socialPosts';
+import { social } from '../../data/social';
+---
+<Base
+  title="Media | Muraqabah Initiative"
+  description="Video, photography, and social media from Muraqabah Initiative. Explore our featured video, browse the gallery, and follow along across every platform."
+>
+  <PageHero
+    eyebrow="Media"
+    title="See the work for yourself"
+    lede="Muraqabah maintains a constant stream of free, beneficial knowledge across every platform: khutbahs and community talks, full lessons on YouTube, and daily reminders and reflections."
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'Media', href: '/media/' }]}
+  />
+
+  <section class="section--tight">
+    <div class="container split">
+      <div data-reveal><VideoEmbed id={featuredVideo.id} title={featuredVideo.title} /></div>
+      <div data-reveal>
+        <p class="eyebrow">Featured Video</p>
+        <h2>{featuredVideo.title}</h2>
+        <p class="muted">{featuredVideo.description}</p>
+        <a class="btn btn-outline" href="/videos/">Browse All Videos</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid cols-3">
+        <a class="card" href="/videos/" data-reveal style="text-decoration: none; color: inherit;">
+          <div class="card__media"><img src="/images/photos/event-speaker.webp" alt="A teacher addressing students" width="640" height="427" loading="lazy" /></div>
+          <div class="card__body"><h3>Videos</h3><p>Talks, lessons, and khidmah updates.</p><span class="text-link">Watch &rarr;</span></div>
+        </a>
+        <a class="card" href="/gallery/" data-reveal style="text-decoration: none; color: inherit;">
+          <div class="card__media"><img src="/images/photos/event-audience-3.webp" alt="Attendees at a Muraqabah program" width="640" height="427" loading="lazy" /></div>
+          <div class="card__body"><h3>Gallery</h3><p>Photography from programs, events, and campaigns.</p><span class="text-link">View gallery &rarr;</span></div>
+        </a>
+        <a class="card" href="/research/" data-reveal style="text-decoration: none; color: inherit;">
+          <div class="card__media"><img src="/images/photos/study-lamp.webp" alt="Reading by lamplight" width="640" height="427" loading="lazy" /></div>
+          <div class="card__body"><h3>Research &amp; Reflections</h3><p>Articles and reflections on sacred knowledge.</p><span class="text-link">Read &rarr;</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {socialPosts.length > 0 && (
+    <section class="section section--sand">
+      <div class="container">
+        <div class="section-head" data-reveal><p class="eyebrow">Social</p><h2>From our feed</h2></div>
+        <div class="gallery-grid">
+          {socialPosts.map((post) => (
+            <a href={post.href} rel="noopener" data-reveal><img src={post.image} alt={post.alt} width="480" height="480" loading="lazy" /><span class="visually-hidden">{post.caption}</span></a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--dark">
+    <div class="container center">
+      <div class="section-head center" style="margin-inline: auto;" data-reveal>
+        <p class="eyebrow" style="justify-content: center;">Follow Along</p>
+        <h2>Find us on every platform</h2>
+      </div>
+      <div class="btn-row" style="justify-content: center;" data-reveal>
+        {social.map((s) => <a class="btn btn-outline-cream" href={s.href} rel="noopener">{s.label}</a>)}
+      </div>
+    </div>
+  </section>
+</Base>
